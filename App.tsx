@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
@@ -11,10 +11,16 @@ import Footer from './components/Footer';
 import Privacy from './components/Privacy';
 import Terms from './components/Terms';
 import Chatbot from './components/Chatbot';
+import AuthModal from './components/AuthModal';
+import DashboardLayout from './components/Dashboard/DashboardLayout';
 import { PageView } from './types';
+import { AuthProvider, useAuth } from './AuthContext';
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<PageView>('home');
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authModalMode, setAuthModalMode] = useState<'login' | 'register' | 'demo'>('login');
+  const { currentUser } = useAuth();
 
   const navigateToPage = (page: PageView) => {
     setCurrentPage(page);
@@ -24,7 +30,6 @@ const App: React.FC = () => {
   const navigateToSection = (id: string) => {
     if (currentPage !== 'home') {
       setCurrentPage('home');
-      // Delay scrolling to allow render
       setTimeout(() => {
         const element = document.getElementById(id);
         if (element) {
@@ -39,14 +44,40 @@ const App: React.FC = () => {
     }
   };
 
+  const handleOpenAuth = (mode: 'login' | 'register' | 'demo' = 'login') => {
+    setAuthModalMode(mode);
+    setAuthModalOpen(true);
+  };
+
+  const handleLoginSuccess = () => {
+    navigateToPage('dashboard');
+  };
+
+  // If on Dashboard page, show the complete Dashboard Portal
+  if (currentPage === 'dashboard') {
+    return (
+      <>
+        <DashboardLayout onBackToHome={() => navigateToPage('home')} />
+        <Chatbot />
+      </>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      <Navbar onNavigate={navigateToPage} onSectionClick={navigateToSection} />
+    <div className="min-h-screen bg-white flex flex-col font-sans">
+      <Navbar 
+        onNavigate={navigateToPage} 
+        onSectionClick={navigateToSection}
+        onOpenAuth={handleOpenAuth}
+      />
       
       <main className="flex-grow">
         {currentPage === 'home' && (
           <>
-            <Hero onSectionClick={navigateToSection} />
+            <Hero 
+              onSectionClick={navigateToSection} 
+              onOpenAuth={handleOpenAuth}
+            />
             <Services onSectionClick={navigateToSection} />
             <Process />
             <Segments />
@@ -61,7 +92,23 @@ const App: React.FC = () => {
 
       <Footer onNavigate={navigateToPage} onSectionClick={navigateToSection} />
       <Chatbot />
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        initialMode={authModalMode}
+        onLoginSuccess={handleLoginSuccess}
+      />
     </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 };
 

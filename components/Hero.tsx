@@ -1,11 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { HERO_CONTENT, INTRO_CONTENT, ICONS } from '../constants';
+import { Sparkles, ArrowRight, UserCheck } from 'lucide-react';
 
 interface HeroProps {
   onSectionClick: (id: string) => void;
+  onOpenAuth?: (mode: 'login' | 'register' | 'demo') => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ onSectionClick }) => {
+const Hero: React.FC<HeroProps> = ({ onSectionClick, onOpenAuth }) => {
   const bgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -29,7 +31,6 @@ const Hero: React.FC<HeroProps> = ({ onSectionClick }) => {
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    // Initial position
     handleScroll();
 
     return () => window.removeEventListener('scroll', onScroll);
@@ -71,7 +72,7 @@ const Hero: React.FC<HeroProps> = ({ onSectionClick }) => {
               </p>
             )}
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-6">
               <button 
                 onClick={() => onSectionClick('contact')}
                 className="group inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-bold rounded-2xl text-white bg-slate-900 hover:bg-slate-800 shadow-xl shadow-slate-900/20 hover:shadow-2xl hover:shadow-slate-900/30 transition-all duration-300 hover:-translate-y-1"
@@ -87,6 +88,30 @@ const Hero: React.FC<HeroProps> = ({ onSectionClick }) => {
                 {HERO_CONTENT.ctaSecondary}
               </button>
             </div>
+
+            {/* Account Portal Callout */}
+            {onOpenAuth && (
+              <div className="mb-8 p-3 rounded-2xl bg-white/80 border border-slate-200/80 shadow-sm inline-flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs">
+                <span className="text-slate-600 flex items-center gap-1 font-medium">
+                  <Sparkles size={14} className="text-teal-600" />
+                  Al klant of direct testen?
+                </span>
+                <button
+                  onClick={() => onOpenAuth('login')}
+                  className="font-bold text-slate-900 hover:text-teal-600 underline underline-offset-2"
+                >
+                  Inloggen via Google / E-mail
+                </button>
+                <span className="text-slate-300">•</span>
+                <button
+                  onClick={() => onOpenAuth('demo')}
+                  className="font-bold text-teal-700 hover:text-teal-800 bg-teal-50 hover:bg-teal-100 px-2.5 py-1 rounded-lg transition-colors flex items-center gap-1"
+                >
+                  <UserCheck size={13} />
+                  <span>Probeer Demo Accounts</span>
+                </button>
+              </div>
+            )}
 
             {/* Microcopy */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-x-6 gap-y-3 text-sm font-medium text-slate-500">

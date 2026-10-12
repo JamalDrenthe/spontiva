@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "spontiva-dev",
+    "dev": "spontiva-dev",
+    "prod": "spontiva-prod"
+  }
+}

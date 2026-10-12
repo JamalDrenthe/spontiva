@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { NAV_ITEMS } from '../constants';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LogIn, UserPlus, LayoutDashboard, LogOut, ShieldAlert, Sparkles } from 'lucide-react';
 import { PageView } from '../types';
+import { useAuth } from '../AuthContext';
 
 interface NavbarProps {
   onNavigate: (page: PageView) => void;
   onSectionClick: (id: string) => void;
+  onOpenAuth: (mode: 'login' | 'register' | 'demo') => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onNavigate, onSectionClick }) => {
+const Navbar: React.FC<NavbarProps> = ({ onNavigate, onSectionClick, onOpenAuth }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { currentUser, logout, isAdmin } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,7 +25,6 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onSectionClick }) => {
 
   const handleNavClick = (href: string) => {
     setIsOpen(false);
-    // Remove the '#' from the href
     onSectionClick(href.substring(1));
   };
 
@@ -32,13 +34,14 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onSectionClick }) => {
   };
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${
+    <nav className={`fixed w-full z-40 transition-all duration-300 ${
       scrolled 
-        ? 'bg-white/80 backdrop-blur-md border-b border-slate-200/60 shadow-sm' 
-        : 'bg-white/0 border-transparent'
+        ? 'bg-white/90 backdrop-blur-md border-b border-slate-200/60 shadow-sm' 
+        : 'bg-white/40 backdrop-blur-sm border-transparent'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
+          
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center cursor-pointer group" onClick={handleLogoClick}>
              <span className="text-2xl font-extrabold text-slate-900 tracking-tight transition-colors group-hover:text-slate-700">
@@ -47,7 +50,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onSectionClick }) => {
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-6">
             {NAV_ITEMS.map((item) => (
               <a
                 key={item.label}
@@ -56,25 +59,88 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onSectionClick }) => {
                   e.preventDefault();
                   handleNavClick(item.href);
                 }}
-                className="text-slate-600 hover:text-teal-600 px-3 py-2 text-sm font-medium transition-all hover:-translate-y-0.5"
+                className="text-slate-600 hover:text-teal-600 px-2 py-2 text-sm font-medium transition-all hover:-translate-y-0.5"
               >
                 {item.label}
               </a>
             ))}
-            <a 
-              href="#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavClick('#contact');
-              }}
-              className="bg-slate-900 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/20 hover:shadow-slate-900/40 hover:-translate-y-0.5"
-            >
-              Start Nu
-            </a>
+
+            {/* Auth Buttons */}
+            <div className="flex items-center space-x-2 pl-3 border-l border-slate-200">
+              {currentUser ? (
+                <>
+                  <button
+                    onClick={() => onNavigate('dashboard')}
+                    className="flex items-center space-x-2 bg-teal-50 hover:bg-teal-100 text-teal-800 px-3.5 py-2 rounded-xl text-xs font-bold border border-teal-200 transition-all hover:-translate-y-0.5"
+                  >
+                    <LayoutDashboard size={15} className="text-teal-600" />
+                    <span>Dashboard</span>
+                    {isAdmin && (
+                      <span className="bg-purple-600 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold ml-1">
+                        Admin
+                      </span>
+                    )}
+                  </button>
+
+                  <button
+                    onClick={logout}
+                    title="Uitloggen"
+                    className="text-slate-400 hover:text-rose-600 p-2 rounded-lg hover:bg-rose-50 transition-colors"
+                  >
+                    <LogOut size={16} />
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => onOpenAuth('login')}
+                    className="text-slate-700 hover:text-slate-900 font-semibold px-3 py-2 text-xs rounded-xl hover:bg-slate-100 transition-colors flex items-center space-x-1.5"
+                  >
+                    <LogIn size={14} className="text-slate-500" />
+                    <span>Inloggen</span>
+                  </button>
+
+                  <button
+                    onClick={() => onOpenAuth('register')}
+                    className="bg-slate-900 text-white font-semibold px-4 py-2 rounded-xl text-xs hover:bg-slate-800 transition-all shadow-md shadow-slate-900/10 hover:-translate-y-0.5 flex items-center space-x-1.5"
+                  >
+                    <UserPlus size={14} />
+                    <span>Registreren</span>
+                  </button>
+
+                  <button
+                    onClick={() => onOpenAuth('demo')}
+                    className="bg-teal-500/15 hover:bg-teal-500/25 text-teal-800 border border-teal-200 font-bold px-3 py-2 rounded-xl text-xs transition-colors flex items-center space-x-1"
+                    title="Probeer direct een demo account"
+                  >
+                    <Sparkles size={13} className="text-teal-600" />
+                    <span>Demo</span>
+                  </button>
+                </>
+              )}
+            </div>
           </div>
 
           {/* Mobile menu button */}
-          <div className="flex items-center md:hidden">
+          <div className="flex items-center lg:hidden space-x-2">
+            {!currentUser && (
+              <button
+                onClick={() => onOpenAuth('login')}
+                className="text-xs font-bold text-slate-800 bg-slate-100 px-3 py-1.5 rounded-lg"
+              >
+                Inloggen
+              </button>
+            )}
+            {currentUser && (
+              <button
+                onClick={() => onNavigate('dashboard')}
+                className="text-xs font-bold text-teal-800 bg-teal-100 px-3 py-1.5 rounded-lg flex items-center gap-1"
+              >
+                <LayoutDashboard size={13} />
+                <span>Portal</span>
+              </button>
+            )}
+
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="inline-flex items-center justify-center p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none transition-colors"
@@ -87,7 +153,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onSectionClick }) => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white border-b border-slate-100 absolute w-full shadow-xl">
+        <div className="lg:hidden bg-white border-b border-slate-100 absolute w-full shadow-xl">
           <div className="px-4 pt-2 pb-6 space-y-2">
             {NAV_ITEMS.map((item) => (
               <a
@@ -97,21 +163,68 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onSectionClick }) => {
                   e.preventDefault();
                   handleNavClick(item.href);
                 }}
-                className="block px-3 py-3 rounded-lg text-base font-medium text-slate-600 hover:text-teal-600 hover:bg-slate-50 transition-colors"
+                className="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-600 hover:text-teal-600 hover:bg-slate-50 transition-colors"
               >
                 {item.label}
               </a>
             ))}
-            <a 
-              href="#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavClick('#contact');
-              }}
-              className="block mt-6 text-center w-full bg-slate-900 text-white px-5 py-3 rounded-xl font-bold shadow-md active:scale-95 transition-transform"
-            >
-              Start Nu
-            </a>
+
+            <div className="pt-4 border-t border-slate-100 space-y-2">
+              {currentUser ? (
+                <>
+                  <button 
+                    onClick={() => {
+                      setIsOpen(false);
+                      onNavigate('dashboard');
+                    }}
+                    className="w-full text-center bg-teal-600 text-white px-4 py-2.5 rounded-xl font-bold flex items-center justify-center space-x-2"
+                  >
+                    <LayoutDashboard size={16} />
+                    <span>Naar Dashboard</span>
+                  </button>
+                  <button 
+                    onClick={() => {
+                      setIsOpen(false);
+                      logout();
+                    }}
+                    className="w-full text-center text-rose-600 py-2 text-xs font-semibold"
+                  >
+                    Uitloggen
+                  </button>
+                </>
+              ) : (
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={() => {
+                      setIsOpen(false);
+                      onOpenAuth('login');
+                    }}
+                    className="text-center py-2.5 border border-slate-200 rounded-xl text-xs font-bold text-slate-800"
+                  >
+                    Inloggen
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsOpen(false);
+                      onOpenAuth('register');
+                    }}
+                    className="text-center py-2.5 bg-slate-900 text-white rounded-xl text-xs font-bold"
+                  >
+                    Registreren
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsOpen(false);
+                      onOpenAuth('demo');
+                    }}
+                    className="col-span-2 text-center py-2 bg-teal-50 text-teal-800 border border-teal-200 rounded-xl text-xs font-bold flex items-center justify-center space-x-1"
+                  >
+                    <Sparkles size={13} className="text-teal-600" />
+                    <span>Demo Accounts voor normale gebruikers</span>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
