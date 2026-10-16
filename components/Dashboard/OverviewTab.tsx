@@ -240,7 +240,7 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ onNavigate }) => {
 
           <div className="mt-6 pt-4 border-t border-slate-100">
             <div className="text-[11px] text-slate-500">
-              Vragen over een lopend dossier? Neem direct contact op via info@jamaldrenthe.com.
+              Vragen over een lopend dossier? Neem direct contact op via <a href="mailto:info@spontiva.nl" className="font-semibold text-teal-600 hover:underline">info@spontiva.nl</a>.
             </div>
           </div>
         </div>

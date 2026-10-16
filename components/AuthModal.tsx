@@ -224,11 +224,11 @@ const AuthModal: React.FC<AuthModalProps> = ({
                 <span>Inloggen met Google</span>
               </button>
 
-              {/* Admin Note regarding info@jamaldrenthe.com */}
+              {/* Admin Note regarding info@spontiva.nl & info@jamaldrenthe.com */}
               <div className="p-2.5 bg-purple-50/70 border border-purple-100 rounded-lg flex items-center space-x-2 text-[11px] text-purple-900">
                 <ShieldCheck size={14} className="text-purple-600 flex-shrink-0" />
                 <span>
-                  Inloggen met <strong>{ADMIN_EMAIL}</strong> activeert automatisch het volledige <strong>Admin Beheerderspaneel</strong>.
+                  Inloggen met <strong>info@spontiva.nl</strong> of <strong>info@jamaldrenthe.com</strong> activeert automatisch het <strong>Admin Beheerderspaneel</strong>.
                 </span>
               </div>
 

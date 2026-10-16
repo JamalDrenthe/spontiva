@@ -50,7 +50,7 @@ const Privacy: React.FC = () => {
           <section>
             <h2 className="text-xl font-bold text-slate-900 mb-3">5. Uw rechten</h2>
             <p>
-              U heeft het recht om uw persoonsgegevens in te zien, te corrigeren of te laten verwijderen. Neem hiervoor contact met ons op via het contactformulier op de website.
+              U heeft het recht om uw persoonsgegevens in te zien, te corrigeren of te laten verwijderen. Neem hiervoor contact met ons op via <a href="mailto:info@spontiva.nl" className="text-teal-600 font-semibold hover:underline">info@spontiva.nl</a> of het contactformulier op de website.
             </p>
           </section>
         </div>

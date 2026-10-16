@@ -24,6 +24,12 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onSectionClick }) => {
         </div>
         <div className="md:text-right flex flex-col justify-between">
           <div className="space-x-6 mb-4 md:mb-0">
+             <a
+                href="mailto:info@spontiva.nl"
+                className="text-teal-400 hover:text-teal-300 font-medium transition-colors text-left md:text-right"
+             >
+                info@spontiva.nl
+             </a>
              <button 
                 onClick={() => onNavigate('privacy')} 
                 className="hover:text-white transition-colors text-left md:text-right"

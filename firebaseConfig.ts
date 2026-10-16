@@ -33,11 +33,13 @@ googleProvider.setCustomParameters({
 });
 
 // Admin email check as requested
-export const ADMIN_EMAIL = 'info@jamaldrenthe.com';
+export const ADMIN_EMAIL = 'info@spontiva.nl';
+export const ADMIN_EMAILS = ['info@spontiva.nl', 'info@jamaldrenthe.com'];
 
 export const isUserAdmin = (email?: string | null): boolean => {
   if (!email) return false;
-  return email.trim().toLowerCase() === ADMIN_EMAIL.toLowerCase();
+  const cleanEmail = email.trim().toLowerCase();
+  return ADMIN_EMAILS.some(a => a.toLowerCase() === cleanEmail);
 };
 
 export {

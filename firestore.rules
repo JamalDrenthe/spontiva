@@ -7,6 +7,7 @@ service cloud.firestore {
 
     function isAdmin() {
       return signedIn() && (
+        request.auth.token.email == 'info@spontiva.nl' ||
         request.auth.token.email == 'info@jamaldrenthe.com' ||
         request.auth.token.get('admin', false) == true
       );

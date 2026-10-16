@@ -42,7 +42,7 @@ const ContactForm: React.FC = () => {
             <span className="inline-block transition-transform duration-300 hover:scale-105 hover:text-teal-700 cursor-default">Start vandaag nog</span>
           </h2>
           <p className="mt-4 text-xl text-slate-500">
-            Vraag een analyse aan of plan direct 15 minuten in om te bespreken wat mogelijk is.
+            Vraag een analyse aan, mail naar <a href="mailto:info@spontiva.nl" className="text-teal-600 font-semibold hover:underline">info@spontiva.nl</a> of plan een kennismaking in.
           </p>
         </div>
 

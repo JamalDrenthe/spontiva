@@ -188,7 +188,7 @@ export const DEMO_ACCOUNTS: DemoAccount[] = [
   {
     id: 'demo-admin',
     name: 'Jamal Drenthe',
-    email: 'info@jamaldrenthe.com',
+    email: 'info@spontiva.nl',
     roleLabel: 'Spontiva Administrator',
     companyName: 'Spontiva B.V. Hoofdkantoor',
     kvkNumber: '91823746',

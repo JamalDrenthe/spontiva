@@ -33,7 +33,7 @@ ${COST_INFO.disclaimer}
 FAQ:
 ${FAQ_ITEMS.map(f => `Vraag: ${f.question}\nAntwoord: ${f.answer}`).join('\n')}
 
-Belangrijk: Je geeft geen financieel advies, maar informeert over de diensten van Spontiva. Verwijs bij specifieke aanvragen naar het contactformulier.
+Belangrijk: Je geeft geen financieel advies, maar informeert over de diensten van Spontiva. Verwijs bij specifieke aanvragen of contact naar info@spontiva.nl of het contactformulier.
 `;
 
 interface Message {
