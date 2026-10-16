@@ -24,6 +24,7 @@ export default defineConfig(({ mode }) => {
         rollupOptions: {
           output: {
             manualChunks: {
+              three: ['three'],
               firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore'],
               vendor: ['react', 'react-dom', 'lucide-react']
             }

@@ -23,30 +23,36 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onSectionClick }) => {
           </p>
         </div>
         <div className="md:text-right flex flex-col justify-between">
-          <div className="space-x-6 mb-4 md:mb-0">
+          <div className="flex flex-wrap gap-x-6 gap-y-2 mb-4 md:mb-0 justify-start md:justify-end text-sm">
+             <button 
+                onClick={() => onNavigate('about')} 
+                className="hover:text-white transition-colors"
+             >
+                Over ons
+             </button>
+             <button 
+                onClick={() => onNavigate('contact')} 
+                className="hover:text-white transition-colors"
+             >
+                Contact
+             </button>
              <a
                 href="mailto:info@spontiva.nl"
-                className="text-teal-400 hover:text-teal-300 font-medium transition-colors text-left md:text-right"
+                className="text-teal-400 hover:text-teal-300 font-medium transition-colors"
              >
                 info@spontiva.nl
              </a>
              <button 
                 onClick={() => onNavigate('privacy')} 
-                className="hover:text-white transition-colors text-left md:text-right"
+                className="hover:text-white transition-colors"
              >
                 Privacy
              </button>
              <button 
                 onClick={() => onNavigate('terms')} 
-                className="hover:text-white transition-colors text-left md:text-right"
+                className="hover:text-white transition-colors"
              >
                 Voorwaarden
-             </button>
-             <button 
-                onClick={() => onSectionClick('contact')} 
-                className="hover:text-white transition-colors text-left md:text-right"
-             >
-                Contact
              </button>
           </div>
           <p className="text-xs text-slate-600">

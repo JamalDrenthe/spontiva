@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { NAV_ITEMS } from '../constants';
 import { Menu, X, LogIn, UserPlus, LayoutDashboard, LogOut, ShieldAlert, Sparkles } from 'lucide-react';
 import { PageView } from '../types';
 import { useAuth } from '../AuthContext';
 
 interface NavbarProps {
+  currentPage?: PageView;
   onNavigate: (page: PageView) => void;
   onSectionClick: (id: string) => void;
   onOpenAuth: (mode: 'login' | 'register' | 'demo') => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onNavigate, onSectionClick, onOpenAuth }) => {
+const Navbar: React.FC<NavbarProps> = ({ 
+  currentPage = 'home',
+  onNavigate, 
+  onSectionClick, 
+  onOpenAuth 
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { currentUser, logout, isAdmin } = useAuth();
@@ -25,7 +30,9 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onSectionClick, onOpenAuth 
 
   const handleNavClick = (href: string) => {
     setIsOpen(false);
-    onSectionClick(href.substring(1));
+    if (href.startsWith('#')) {
+      onSectionClick(href.substring(1));
+    }
   };
 
   const handleLogoClick = () => {
@@ -33,36 +40,45 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onSectionClick, onOpenAuth 
     onNavigate('home');
   };
 
+  const menuItems = [
+    { label: 'Home', action: () => onNavigate('home'), active: currentPage === 'home' },
+    { label: 'Diensten', action: () => handleNavClick('#diensten'), active: false },
+    { label: 'Hoe het werkt', action: () => handleNavClick('#werkwijze'), active: false },
+    { label: 'Kosten', action: () => handleNavClick('#kosten'), active: false },
+    { label: 'Over ons', action: () => onNavigate('about'), active: currentPage === 'about' },
+    { label: 'Contact', action: () => onNavigate('contact'), active: currentPage === 'contact' },
+  ];
+
   return (
     <nav className={`fixed w-full z-40 transition-all duration-300 ${
       scrolled 
         ? 'bg-white/90 backdrop-blur-md border-b border-slate-200/60 shadow-sm' 
-        : 'bg-white/40 backdrop-blur-sm border-transparent'
+        : 'bg-white/50 backdrop-blur-sm border-transparent'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
           
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center cursor-pointer group" onClick={handleLogoClick}>
-             <span className="text-2xl font-extrabold text-slate-900 tracking-tight transition-colors group-hover:text-slate-700">
+             <span className="text-2xl font-black text-slate-900 tracking-tight transition-colors group-hover:text-slate-700">
                Spontiva<span className="text-teal-500">.</span>
              </span>
           </div>
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center space-x-6">
-            {NAV_ITEMS.map((item) => (
-              <a
+            {menuItems.map((item) => (
+              <button
                 key={item.label}
-                href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(item.href);
-                }}
-                className="text-slate-600 hover:text-teal-600 px-2 py-2 text-sm font-medium transition-all hover:-translate-y-0.5"
+                onClick={item.action}
+                className={`px-2.5 py-2 text-xs sm:text-sm font-semibold transition-all hover:-translate-y-0.5 rounded-lg ${
+                  item.active
+                    ? 'text-teal-700 bg-teal-50/80 font-bold'
+                    : 'text-slate-600 hover:text-teal-600'
+                }`}
               >
                 {item.label}
-              </a>
+              </button>
             ))}
 
             {/* Auth Buttons */}
@@ -71,7 +87,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onSectionClick, onOpenAuth 
                 <>
                   <button
                     onClick={() => onNavigate('dashboard')}
-                    className="flex items-center space-x-2 bg-teal-50 hover:bg-teal-100 text-teal-800 px-3.5 py-2 rounded-xl text-xs font-bold border border-teal-200 transition-all hover:-translate-y-0.5"
+                    className="flex items-center space-x-2 bg-teal-50 hover:bg-teal-100 text-teal-800 px-3.5 py-2 rounded-xl text-xs font-bold border border-teal-200 transition-all hover:-translate-y-0.5 shadow-sm"
                   >
                     <LayoutDashboard size={15} className="text-teal-600" />
                     <span>Dashboard</span>
@@ -144,6 +160,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onSectionClick, onOpenAuth 
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="inline-flex items-center justify-center p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none transition-colors"
+              aria-label="Menu openen"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -154,19 +171,22 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onSectionClick, onOpenAuth 
       {/* Mobile Menu */}
       {isOpen && (
         <div className="lg:hidden bg-white border-b border-slate-100 absolute w-full shadow-xl">
-          <div className="px-4 pt-2 pb-6 space-y-2">
-            {NAV_ITEMS.map((item) => (
-              <a
+          <div className="px-4 pt-2 pb-6 space-y-1.5">
+            {menuItems.map((item) => (
+              <button
                 key={item.label}
-                href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(item.href);
+                onClick={() => {
+                  setIsOpen(false);
+                  item.action();
                 }}
-                className="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-600 hover:text-teal-600 hover:bg-slate-50 transition-colors"
+                className={`block w-full text-left px-3 py-2.5 rounded-xl text-base font-semibold transition-colors ${
+                  item.active 
+                    ? 'text-teal-700 bg-teal-50 font-bold'
+                    : 'text-slate-600 hover:text-teal-600 hover:bg-slate-50'
+                }`}
               >
                 {item.label}
-              </a>
+              </button>
             ))}
 
             <div className="pt-4 border-t border-slate-100 space-y-2">
@@ -177,7 +197,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onSectionClick, onOpenAuth 
                       setIsOpen(false);
                       onNavigate('dashboard');
                     }}
-                    className="w-full text-center bg-teal-600 text-white px-4 py-2.5 rounded-xl font-bold flex items-center justify-center space-x-2"
+                    className="w-full text-center bg-teal-600 text-white px-4 py-2.5 rounded-xl font-bold flex items-center justify-center space-x-2 shadow-md"
                   >
                     <LayoutDashboard size={16} />
                     <span>Naar Dashboard</span>

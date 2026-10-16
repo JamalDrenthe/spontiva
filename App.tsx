@@ -13,6 +13,9 @@ import Terms from './components/Terms';
 import Chatbot from './components/Chatbot';
 import AuthModal from './components/AuthModal';
 import DashboardLayout from './components/Dashboard/DashboardLayout';
+import About from './components/About';
+import ContactPage from './components/ContactPage';
+import ScrollProgress from './components/ScrollProgress';
 import { PageView } from './types';
 import { AuthProvider, useAuth } from './AuthContext';
 
@@ -24,7 +27,7 @@ const AppContent: React.FC = () => {
 
   const navigateToPage = (page: PageView) => {
     setCurrentPage(page);
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const navigateToSection = (id: string) => {
@@ -35,7 +38,7 @@ const AppContent: React.FC = () => {
         if (element) {
           element.scrollIntoView({ behavior: 'smooth' });
         }
-      }, 100);
+      }, 120);
     } else {
       const element = document.getElementById(id);
       if (element) {
@@ -64,8 +67,12 @@ const AppContent: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white flex flex-col font-sans">
+    <div className="min-h-screen bg-white flex flex-col font-sans selection:bg-teal-500 selection:text-white">
+      {/* Top 3D Interactive Scroll Progress Bar */}
+      <ScrollProgress />
+
       <Navbar 
+        currentPage={currentPage}
         onNavigate={navigateToPage} 
         onSectionClick={navigateToSection}
         onOpenAuth={handleOpenAuth}
@@ -85,6 +92,18 @@ const AppContent: React.FC = () => {
             <FAQ />
             <ContactForm />
           </>
+        )}
+        {currentPage === 'about' && (
+          <About 
+            onNavigate={navigateToPage} 
+            onOpenAuth={handleOpenAuth} 
+          />
+        )}
+        {currentPage === 'contact' && (
+          <ContactPage 
+            onNavigate={navigateToPage} 
+            onOpenAuth={handleOpenAuth} 
+          />
         )}
         {currentPage === 'privacy' && <Privacy />}
         {currentPage === 'terms' && <Terms />}

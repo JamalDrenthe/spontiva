@@ -33,7 +33,7 @@ export enum FormType {
   CONTACT = 'contact'
 }
 
-export type PageView = 'home' | 'privacy' | 'terms' | 'dashboard';
+export type PageView = 'home' | 'privacy' | 'terms' | 'dashboard' | 'about' | 'contact';
 
 export type UserRole = 'admin' | 'user' | 'demo';
 
