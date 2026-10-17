@@ -22,6 +22,8 @@ import {
 import { ADMIN_EMAIL } from '../../firebaseConfig';
 import { DEMO_ACCOUNTS } from '../../demoData';
 
+import { TGC_METHODS_CATALOG } from '../../tgcMethodsData';
+
 const AdminTab: React.FC = () => {
   const { applications, updateApplicationStatus, currentUser, loginWithDemo } = useAuth();
   
@@ -30,6 +32,7 @@ const AdminTab: React.FC = () => {
   const [editingApp, setEditingApp] = useState<TGCApplication | null>(null);
   const [feedbackText, setFeedbackText] = useState('');
   const [approvedAmountInput, setApprovedAmountInput] = useState<number>(0);
+  const [assignedMethod, setAssignedMethod] = useState<string>('TGC-M01');
   const [newStatus, setNewStatus] = useState<ApplicationStatus>('goedgekeurd');
   const [actionSuccess, setActionSuccess] = useState<string | null>(null);
 
@@ -56,16 +59,22 @@ const AdminTab: React.FC = () => {
     setNewStatus(app.status);
     setFeedbackText(app.adminFeedback || '');
     setApprovedAmountInput(app.approvedAmount || app.amount);
+    setAssignedMethod(app.recommendedMethod?.split(' ')[0] || 'TGC-M01');
   };
 
   const handleSaveDecision = (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingApp) return;
 
+    const chosen = TGC_METHODS_CATALOG.find(m => m.code === assignedMethod);
+    const feedbackWithMethod = feedbackText 
+      ? `[Methode: ${assignedMethod} - ${chosen?.title || ''}] ${feedbackText}`
+      : `Toegewezen methode: ${assignedMethod} - ${chosen?.title || ''}`;
+
     updateApplicationStatus(
       editingApp.id,
       newStatus,
-      feedbackText,
+      feedbackWithMethod,
       approvedAmountInput
     );
 
@@ -338,6 +347,21 @@ const AdminTab: React.FC = () => {
                   <option value="actief">ACTIEF (UITBETAALD)</option>
                   <option value="afgerond">AFGEROND</option>
                   <option value="afgewezen">AFGEWEZEN</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block font-bold text-slate-700 mb-1">Toegewezen TGC-Methode (60+ Catalogus)</label>
+                <select
+                  value={assignedMethod}
+                  onChange={(e) => setAssignedMethod(e.target.value)}
+                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500/20 font-medium"
+                >
+                  {TGC_METHODS_CATALOG.map(m => (
+                    <option key={m.code} value={m.code}>
+                      {m.code} - {m.title} ({m.indicativeFee})
+                    </option>
+                  ))}
                 </select>
               </div>
 

@@ -92,6 +92,84 @@ export interface DocumentItem {
   url?: string;
 }
 
+export type DashboardTab = 
+  | 'overzicht' 
+  | 'analyses' 
+  | 'interventies' 
+  | 'facturen' 
+  | 'methodes' 
+  | 'nieuwe-aanvraag' 
+  | 'simulator' 
+  | 'documenten' 
+  | 'instellingen' 
+  | 'admin';
+
+export type TGCMethodCategory = 
+  | 'debiteuren' 
+  | 'inkoop_voorraad' 
+  | 'projecten' 
+  | 'lasten_belasting' 
+  | 'korting_arbitrage';
+
+export interface TGCMethod {
+  id: string;
+  code: string;
+  title: string;
+  category: TGCMethodCategory;
+  categoryLabel: string;
+  description: string;
+  useCase: string;
+  timeGapRange: string;
+  indicativeFee: string;
+  duration: string;
+  suitability: string[];
+  requirements: string[];
+  isPopular?: boolean;
+  autoStopsOnPayment: boolean;
+}
+
+export interface InvoiceItem {
+  id: string;
+  userId: string;
+  invoiceNumber: string;
+  counterparty: string;
+  type: 'debiteur' | 'crediteur';
+  amount: number;
+  issueDate: string;
+  dueDate: string;
+  timeGapDays: number;
+  status: 'openstaand' | 'overbrugd' | 'voldaan';
+  linkedMethodId?: string;
+  notes?: string;
+}
+
+export interface AnalysisBottleneck {
+  title: string;
+  description: string;
+  impactAmount: number;
+  daysDelay: number;
+  severity: 'hoog' | 'gemiddeld' | 'laag';
+  suggestedMethodCode: string;
+  suggestedMethodTitle: string;
+}
+
+export interface AnalysisReport {
+  id: string;
+  userId: string;
+  companyName: string;
+  title: string;
+  auditDate: string;
+  status: 'voltooid' | 'in_analyse';
+  cashflowScore: number;
+  avgDebtorDays: number;
+  avgCreditorDays: number;
+  lockedCapital: number;
+  unlockedPotential: number;
+  bottlenecks: AnalysisBottleneck[];
+  conclusion: string;
+  recommendedNextStep: string;
+}
+
 export interface DemoAccount {
   id: string;
   name: string;
@@ -100,9 +178,13 @@ export interface DemoAccount {
   companyName: string;
   kvkNumber: string;
   iban: string;
+  vatNumber?: string;
+  address?: string;
   isAdmin: boolean;
   avatarBg: string;
   description: string;
   applications: TGCApplication[];
   documents: DocumentItem[];
+  invoices?: InvoiceItem[];
+  reports?: AnalysisReport[];
 }
