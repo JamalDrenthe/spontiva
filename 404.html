@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="project-name" content="Spontiva">
-    <title>404 — Pagina Niet Gevonden | Spontiva</title>
+    <title>404 — Pagina Niet Gevonden</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -369,14 +368,13 @@
     <canvas id="bg-canvas"></canvas>
     <div class="vignette"></div>
 
-    <!-- Header met ECHT Transparant Bedrijfslogo (Zonder achtergrondbox) -->
+    <!-- Header met ECHT Transparant Bedrijfslogo (Alleen logo icoon) -->
     <header class="top-header">
-        <a href="/" onclick="handleNavClick(event)" class="brand-link" aria-label="Spontiva Home">
+        <a href="/" onclick="handleNavClick(event)" class="brand-link" aria-label="Home">
             <div class="brand-logo-badge">
-                <img src="/spontiva-full-logo-dark.svg" alt="Spontiva Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-                <span style="display:none; font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:1.1rem; color:var(--text-primary);">SP</span>
+                <img src="/spontiva-s-badge.svg" alt="Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+                <span style="display:none; font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:1.1rem; color:var(--text-primary);">S.</span>
             </div>
-            <span class="brand-name">Spontiva</span>
         </a>
 
         <button onclick="toggleTheme()" class="theme-btn" aria-label="Wissel thema">
@@ -400,12 +398,12 @@
                 <span class="digit-layer-front">4</span>
             </div>
 
-            <!-- Middelste 3D Bedrijfslogo (VRIJ ZWEVEND ZONDER ACHTERGRONDBOX) -->
+            <!-- Middelste 3D Bedrijfslogo (Alleen S. logo icoon) -->
             <div id="company-centerpiece" onclick="triggerLogoPulse(event)" class="centerpiece" title="Klik voor 3D interactie">
                 <div id="center-logo-box" class="center-logo-box">
-                    <img src="/spontiva-full-logo-dark.svg" alt="Spontiva" onerror="this.style.display='none'; document.getElementById('fallback-center').style.display='flex';" />
+                    <img src="/spontiva-s-badge.svg" alt="Logo" onerror="this.style.display='none'; document.getElementById('fallback-center').style.display='flex';" />
                     <div id="fallback-center" class="fallback-center" style="display:none;">
-                        <span>SP</span>
+                        <span>S<span style="color:#10b981;">.</span></span>
                     </div>
                 </div>
             </div>
@@ -419,7 +417,7 @@
 
         <div class="preserve-3d">
             <h1 class="copy-title">Pagina niet gevonden.</h1>
-            <p class="copy-desc">Deze link bestaat niet binnen Spontiva of is verplaatst.</p>
+            <p class="copy-desc">Deze pagina bestaat niet of is verplaatst.</p>
         </div>
 
         <div>
@@ -436,7 +434,7 @@
 
     <!-- Footer -->
     <footer class="bottom-footer">
-        <span style="font-weight:600; color:var(--text-primary);">© Spontiva</span>
+        <span style="font-weight:600; color:var(--text-secondary);">© 2026</span>
         <span style="font-family:monospace;">404</span>
     </footer>
 
