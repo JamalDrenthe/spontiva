@@ -81,14 +81,17 @@ spontiva/
 └── vite.config.ts      # Vite configuration
 ```
 
-## 🚀 Deployment
+## 🚀 Deployment & Infrastructuur
 
-The application is ready for deployment on various platforms:
+De frontend wordt gehost en gedistribueerd via **Cloudflare Pages** en de backend functionaliteiten (authenticatie en database) draaien op **Firebase**:
 
-- **Vercel**: Connect your GitHub repository for automatic deployments
-- **Netlify**: Deploy the build output (`dist` folder)
-- **GitHub Pages**: Use GitHub Actions to build and deploy
-- **Static Hosting**: Deploy the built files to any static hosting service
+- **Hosting & Edge**: [Cloudflare Pages](https://pages.cloudflare.com)
+  - **Build command**: `npm run build`
+  - **Output directory**: `dist`
+  - **SPA Routing**: Afgehandeld via `public/_redirects`
+- **Backend & Auth**: [Google Firebase](https://firebase.google.com) (`spontiva-dev`)
+  - **Authentication**: Google OAuth & E-mail login via Firebase Auth
+  - **Database**: Cloud Firestore
 
 ## 🤝 Contributing
 
@@ -104,5 +107,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 🔗 Links
 
-- **Live Site**: [View the deployed application](https://jamaldrenthe.github.io/spontiva/)
+- **Live Site**: [https://spontiva.nl](https://spontiva.nl)
 - **GitHub Repository**: [https://github.com/JamalDrenthe/spontiva](https://github.com/JamalDrenthe/spontiva)
