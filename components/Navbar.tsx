@@ -3,6 +3,8 @@ import { Menu, X, LogIn, UserPlus, LayoutDashboard, LogOut, ShieldAlert, Sparkle
 import { PageView } from '../types';
 import { useAuth } from '../AuthContext';
 
+import { SpontivaLogo } from './SpontivaLogo';
+
 interface NavbarProps {
   currentPage?: PageView;
   onNavigate: (page: PageView) => void;
@@ -59,9 +61,10 @@ const Navbar: React.FC<NavbarProps> = ({
         <div className="flex justify-between h-20 items-center">
           
           {/* Logo */}
-          <div className="flex-shrink-0 flex items-center cursor-pointer group" onClick={handleLogoClick}>
+          <div className="flex-shrink-0 flex items-center space-x-2.5 cursor-pointer group" onClick={handleLogoClick}>
+             <SpontivaLogo variant="badge" size={38} className="transition-transform group-hover:scale-105" />
              <span className="text-2xl font-black text-slate-900 tracking-tight transition-colors group-hover:text-slate-700">
-               Spontiva<span className="text-teal-500">.</span>
+               Spontiva<span className="text-emerald-500">.</span>
              </span>
           </div>
 

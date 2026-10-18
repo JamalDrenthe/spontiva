@@ -1,6 +1,7 @@
 import React from 'react';
 import { FOOTER_TEXT } from '../constants';
 import { PageView } from '../types';
+import { SpontivaLogo } from './SpontivaLogo';
 
 interface FooterProps {
   onNavigate: (page: PageView) => void;
@@ -12,12 +13,15 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onSectionClick }) => {
     <footer className="bg-slate-900 border-t border-slate-800 text-slate-400 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8">
         <div>
-          <span 
-            className="text-2xl font-bold text-white tracking-tight block mb-4 cursor-pointer" 
+          <div 
+            className="flex items-center space-x-2.5 mb-4 cursor-pointer group w-fit" 
             onClick={() => onNavigate('home')}
           >
-            Spontiva<span className="text-teal-500">.</span>
-          </span>
+            <SpontivaLogo variant="badge" size={34} />
+            <span className="text-2xl font-bold text-white tracking-tight transition-colors group-hover:text-slate-200">
+              Spontiva<span className="text-emerald-500">.</span>
+            </span>
+          </div>
           <p className="text-sm leading-relaxed max-w-sm">
             {FOOTER_TEXT}
           </p>

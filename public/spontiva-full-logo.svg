@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 80" width="360" height="80">
+  <defs>
+    <linearGradient id="brandGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="50%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="badgeBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Left Emblem (S.) inside rounded badge -->
+  <g transform="translate(10, 10)">
+    <rect width="60" height="60" rx="16" fill="url(#badgeBg)"/>
+    <g transform="translate(8, 8) scale(0.086)">
+      <path d="M 335 184 H 273 C 269 145 243 128 205 128 C 159 128 135 148 135 176 C 135 204 155 220 211 236 C 285 256 339 284 339 344 C 339 408 287 440 207 440 C 125 440 75 400 71 332 H 133 C 137 372 165 392 207 392 C 251 392 277 372 277 344 C 277 314 257 298 197 282 C 127 262 73 236 73 176 C 73 114 127 80 205 80 C 283 80 331 118 335 184 Z" fill="#FFFFFF"/>
+      <circle cx="407" cy="406" r="34" fill="url(#brandGreen)"/>
+    </g>
+  </g>
+
+  <!-- Wordmark Text -->
+  <text x="86" y="51" font-family="'Inter', system-ui, -apple-system, sans-serif" font-size="34" font-weight="900" letter-spacing="-1" fill="#0F172A">
+    Spontiva<tspan fill="url(#brandGreen)">.</tspan>
+  </text>
+  <text x="88" y="65" font-family="'Inter', system-ui, -apple-system, sans-serif" font-size="9.5" font-weight="700" letter-spacing="1.8" fill="#64748B" text-transform="uppercase">
+    TIME GAP CASHFLOW
+  </text>
+</svg>

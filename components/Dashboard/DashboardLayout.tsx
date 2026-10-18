@@ -33,6 +33,7 @@ import DocumentsTab from './DocumentsTab';
 import SettingsTab from './SettingsTab';
 import AdminTab from './AdminTab';
 import { DEMO_ACCOUNTS } from '../../demoData';
+import { SpontivaLogo } from '../SpontivaLogo';
 
 interface DashboardLayoutProps {
   onBackToHome: () => void;
@@ -165,10 +166,11 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onBackToHome }) => {
 
             <div 
               onClick={onBackToHome} 
-              className="cursor-pointer flex items-center space-x-2 group"
+              className="cursor-pointer flex items-center space-x-2.5 group"
             >
+              <SpontivaLogo variant="badge" size={32} />
               <span className="text-xl font-extrabold text-slate-900 tracking-tight">
-                Spontiva<span className="text-teal-500">.</span>
+                Spontiva<span className="text-emerald-500">.</span>
               </span>
               <span className="text-xs bg-slate-100 text-slate-700 font-semibold px-2.5 py-0.5 rounded-full border border-slate-200 hidden sm:inline-block">
                 Time Gap Cashflow Platform
