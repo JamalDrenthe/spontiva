@@ -66,7 +66,7 @@ const Hero: React.FC<HeroProps> = ({ onSectionClick, onOpenAuth }) => {
             <ScrollReveal direction="down">
               <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-teal-50/90 border border-teal-200/80 text-teal-800 text-xs font-bold uppercase tracking-wide mb-6 shadow-sm backdrop-blur-sm">
                 <span className="w-2 h-2 bg-teal-500 rounded-full mr-2 animate-pulse"></span>
-                <span>MEER DAN 60+ METHODES • 3D MOTION DESIGN</span>
+                <span>MEER DAN 60+ METHODES • TIME GAP CASHFLOW</span>
               </div>
             </ScrollReveal>
             
