@@ -70,8 +70,8 @@ const Services: React.FC<ServicesProps> = ({ onSectionClick }) => {
                 }}
              />
              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent flex flex-col justify-end p-8">
-                <span className="text-white font-bold text-xl">Data-gedreven inzicht</span>
-                <p className="text-slate-300 mt-2 text-sm">Wij analyseren de feiten om tot de beste cashflow oplossing te komen.</p>
+                <span className="text-white font-bold text-xl">Feitelijke Procesanalyse</span>
+                <p className="text-slate-300 mt-2 text-sm">Inzicht in waar in facturatie- en inkoopcycli tijdelijke liquiditeitsruimte ontstaat.</p>
              </div>
           </div>
 

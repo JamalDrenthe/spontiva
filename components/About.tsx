@@ -45,9 +45,7 @@ const About: React.FC<AboutProps> = ({ onNavigate, onOpenAuth }) => {
               </h1>
 
               <p className="text-base sm:text-lg text-slate-600 leading-relaxed pt-2">
-                Spontiva is opgericht met één duidelijke missie: gezonde ondernemers bevrijden van het 
-                <strong> Time Gap dilemma</strong>. Wij overbruggen het tijdsverschil tussen facturatie en betaling 
-                met meer dan 60 beproefde methodes.
+                Spontiva is opgericht met één helder doel: ondernemers ondersteunen bij het overbruggen van timingverschillen tussen inkomende debiteurenbetalingen en uitgaande crediteurenverplichtingen. Met meer dan 60 beproefde TGC-methodes bieden we gerichte tijdelijke liquiditeitsruimte zonder structurele schuldenlast.
               </p>
             </div>
           </ScrollReveal>
@@ -56,10 +54,10 @@ const About: React.FC<AboutProps> = ({ onNavigate, onOpenAuth }) => {
           <ScrollReveal direction="up" delay={200}>
             <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
               {[
-                { number: '€ 18.5M+', label: 'Overbrugde Liquiditeit', icon: TrendingUp },
-                { number: '420+', label: 'MKB & ZZP Klanten', icon: Users },
-                { number: '< 24 Uur', label: 'Gemiddelde Doorlooptijd', icon: Clock },
-                { number: '60+', label: 'TGC-Methodes Beschikbaar', icon: Zap }
+                { number: '60+', label: 'TGC-Methodes Beschikbaar', icon: Zap },
+                { number: '< 24 Uur', label: 'Indicatie & Intake', icon: Clock },
+                { number: '100%', label: 'Regie over Klantrelaties', icon: ShieldCheck },
+                { number: '0', label: 'Structurele Schulden', icon: CheckCircle2 }
               ].map((stat, i) => {
                 const Icon = stat.icon;
                 return (
@@ -129,7 +127,7 @@ const About: React.FC<AboutProps> = ({ onNavigate, onOpenAuth }) => {
                     <div className="p-1.5 bg-rose-50 text-rose-600 rounded-lg shrink-0 mt-0.5">✕</div>
                     <div>
                       <strong className="text-slate-800 block">Standaard Factoring</strong>
-                      <span className="text-slate-500">Volledige overname debiteurenrelatie, ondoorzichtige fees, langlopende wurgcontracten.</span>
+                      <span className="text-slate-500">Volledige overname debiteurenrelatie, variabele opslagen en langdurige contractuele binding.</span>
                     </div>
                   </div>
 
@@ -170,12 +168,12 @@ const About: React.FC<AboutProps> = ({ onNavigate, onOpenAuth }) => {
             {[
               {
                 title: "Snelheid boven bureaucratie",
-                desc: "Geen trage kredietcommissies. Met onze geavanceerde analyses weet je binnen 24 uur waar je aan toe bent.",
+                desc: "Geen trage kredietcommissies. Op basis van een procesaudit van je facturatie- en betaalcycli heb je snel helderheid over de mogelijkheden.",
                 icon: Clock
               },
               {
                 title: "60+ Maatwerk Methodes",
-                desc: "Geen 'one-size-fits-all'. We combineren de beste technieken uit debiteuren-, inkoop- en procesfinanciering.",
+                desc: "Geen starre standaardoplossingen. De gekozen TGC-methode sluit exact aan op je factuurcyclus, projectfase of inkoopmoment.",
                 icon: Target
               },
               {

@@ -148,10 +148,10 @@ const Hero: React.FC<HeroProps> = ({ onSectionClick, onOpenAuth }) => {
                 {/* Floating mini badge */}
                 <div className="flex items-center justify-between mb-6">
                   <span className="text-xs font-bold uppercase tracking-wider text-teal-600 bg-teal-50 px-2.5 py-1 rounded-full border border-teal-200">
-                    Live Cashflow Gap
+                    Indicatieve Case: Facturatiegap
                   </span>
                   <span className="text-xs font-bold text-slate-800 flex items-center gap-1">
-                    <TrendingUp size={14} className="text-emerald-500" /> +€ 35.000 Ruimte
+                    <TrendingUp size={14} className="text-emerald-500" /> +€ 35.000 Overbrugging
                   </span>
                 </div>
 
@@ -174,14 +174,14 @@ const Hero: React.FC<HeroProps> = ({ onSectionClick, onOpenAuth }) => {
                 {/* 3D Visual Flow indication */}
                 <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
                   <span>Debiteur: 45 dagen</span>
-                  <span className="text-teal-600 font-bold">Spontiva Gap Bridge ➔ Direct</span>
+                  <span className="text-teal-600 font-bold">TGC-Interventie ➔ Direct inzetbaar</span>
                 </div>
               </Card3D>
             </ScrollReveal>
             
-            {/* Ambient colorful glow orbs */}
-            <div className="absolute -top-12 -right-12 w-48 h-48 bg-teal-300/25 rounded-full blur-3xl animate-blob pointer-events-none"></div>
-            <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-blue-300/20 rounded-full blur-3xl animate-blob animation-delay-2000 pointer-events-none"></div>
+            {/* Ambient subtle glow */}
+            <div className="absolute -top-12 -right-12 w-48 h-48 bg-teal-100/40 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-slate-100/50 rounded-full blur-3xl pointer-events-none"></div>
           </div>
 
         </div>

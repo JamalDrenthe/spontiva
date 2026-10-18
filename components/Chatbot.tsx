@@ -45,7 +45,7 @@ interface Message {
 const Chatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { id: 'init', text: 'Welkom bij Spontiva! Ik ben uw virtuele assistent. Waarmee kan ik u helpen?', sender: 'bot' }
+    { id: 'init', text: 'Welkom bij Spontiva. Heb je een vraag over onze TGC-methodes, een analyse of een aanvraag? Ik help je graag direct op weg.', sender: 'bot' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
