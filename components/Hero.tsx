@@ -64,9 +64,10 @@ const Hero: React.FC<HeroProps> = ({ onSectionClick, onOpenAuth }) => {
           <div className="lg:col-span-7 text-center lg:text-left">
             
             <ScrollReveal direction="down">
-              <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-teal-50/90 border border-teal-200/80 text-teal-800 text-xs font-bold uppercase tracking-wide mb-6 shadow-sm backdrop-blur-sm">
-                <span className="w-2 h-2 bg-teal-500 rounded-full mr-2 animate-pulse"></span>
-                <span>MEER DAN 60+ METHODES • TIME GAP CASHFLOW</span>
+              <div className="inline-flex items-center gap-3 px-3.5 py-2 rounded-2xl bg-white/95 border border-slate-200/90 shadow-sm backdrop-blur-sm mb-6">
+                <img src="/spontiva-full-logo.svg" alt="Spontiva - TIME GAP CASHFLOW" className="h-7 w-auto" />
+                <span className="w-1.5 h-1.5 bg-teal-500 rounded-full animate-pulse"></span>
+                <span className="text-[11px] font-bold text-teal-800 uppercase tracking-wide">60+ Methodes</span>
               </div>
             </ScrollReveal>
             

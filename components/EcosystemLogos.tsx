@@ -240,9 +240,7 @@ const EcosystemLogos: React.FC = () => {
             <div className="sm:col-span-2 lg:col-span-1 rounded-2xl p-5 border border-teal-500/40 bg-gradient-to-br from-teal-950/60 via-slate-900/90 to-emerald-950/40 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-14 h-14 rounded-2xl bg-teal-500/10 border border-teal-500/30 p-2.5 flex items-center justify-center">
-                    <Layers className="text-teal-400 w-7 h-7" />
-                  </div>
+                  <img src="/spontiva-full-logo-dark.svg" alt="Spontiva - TIME GAP CASHFLOW" className="h-8 w-auto" />
                   <span className="text-[11px] font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-800/60 px-2.5 py-1 rounded-full">
                     Liquiditeitsmotor
                   </span>
