@@ -107,9 +107,12 @@ const AuthModal: React.FC<AuthModalProps> = ({
             <X size={20} />
           </button>
           
-          <div className="flex items-center space-x-2 text-teal-400 mb-1 text-xs font-bold uppercase tracking-wider">
-            <Sparkles size={14} />
-            <span>Spontiva Account Portal</span>
+          <div className="mb-3">
+            <img 
+              src="/spontiva-full-logo-dark.svg" 
+              alt="Spontiva - TIME GAP CASHFLOW" 
+              className="h-8 w-auto"
+            />
           </div>
           <h2 className="text-2xl font-bold tracking-tight text-white">
             {activeTab === 'login' && 'Welkom terug'}

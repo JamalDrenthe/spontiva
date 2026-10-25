@@ -45,9 +45,10 @@ const ContactPage: React.FC<ContactPageProps> = ({ onNavigate, onOpenAuth }) => 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal direction="up">
             <div className="text-center max-w-2xl mx-auto space-y-3">
-              <div className="inline-flex items-center px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 text-xs font-bold uppercase tracking-wider shadow-sm">
-                <Sparkles size={14} className="mr-2 text-teal-600 animate-pulse" />
-                Contact & Intake
+              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-2xl bg-white border border-slate-200 text-slate-800 text-xs font-bold uppercase tracking-wider shadow-sm">
+                <img src="/spontiva-full-logo.svg" alt="Spontiva" className="h-6 w-auto" />
+                <span className="text-slate-300">•</span>
+                <span className="text-teal-700">Contact & Intake</span>
               </div>
 
               <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight">

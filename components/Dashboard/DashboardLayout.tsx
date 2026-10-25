@@ -166,14 +166,15 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onBackToHome }) => {
 
             <div 
               onClick={onBackToHome} 
-              className="cursor-pointer flex items-center space-x-2.5 group"
+              className="cursor-pointer flex items-center space-x-3 group"
             >
-              <SpontivaLogo variant="badge" size={32} />
-              <span className="text-xl font-extrabold text-slate-900 tracking-tight">
-                Spontiva<span className="text-emerald-500">.</span>
-              </span>
-              <span className="text-xs bg-slate-100 text-slate-700 font-semibold px-2.5 py-0.5 rounded-full border border-slate-200 hidden sm:inline-block">
-                Time Gap Cashflow Platform
+              <img 
+                src="/spontiva-full-logo.svg" 
+                alt="Spontiva - TIME GAP CASHFLOW" 
+                className="h-9 w-auto transition-transform group-hover:scale-105"
+              />
+              <span className="text-xs bg-slate-100 text-slate-700 font-semibold px-2.5 py-0.5 rounded-full border border-slate-200 hidden md:inline-block">
+                Portal
               </span>
             </div>
           </div>
