@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import EcosystemLogos from './components/EcosystemLogos';
 import Services from './components/Services';
 import Process from './components/Process';
 import Segments from './components/Segments';
@@ -85,6 +86,7 @@ const AppContent: React.FC = () => {
               onSectionClick={navigateToSection} 
               onOpenAuth={handleOpenAuth}
             />
+            <EcosystemLogos />
             <Services onSectionClick={navigateToSection} />
             <Process />
             <Segments />
