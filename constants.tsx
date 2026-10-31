@@ -1,130 +1,139 @@
 import { NavItem, ServiceItem, StepItem, SegmentItem, FAQItem } from './types';
-import { LayoutDashboard, FileSearch, TrendingUp, Clock, ShieldCheck, PieChart } from 'lucide-react';
+import { LayoutDashboard, FileSearch, TrendingUp, Clock, ShieldCheck, PieChart, Sparkles } from 'lucide-react';
 
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Diensten', href: '#diensten' },
   { label: 'Hoe het werkt', href: '#werkwijze' },
   { label: 'Voor wie', href: '#doelgroep' },
-  { label: 'Kosten', href: '#kosten' },
+  { label: 'Kosten & Calculator', href: '#kosten' },
   { label: 'FAQ', href: '#faq' },
 ];
 
 export const HERO_CONTENT = {
-  title: "TIME GAP CASHFLOW",
-  subtitle: "",
-  ctaPrimary: "Vraag TGC-analyse aan",
-  ctaSecondary: "Doe een TGC-aanvraag"
+  badge: "MEER DAN 60+ METHODES • WERKCAPITAAL OPTIMALISATIE",
+  titlePrimary: "Direct werkkapitaal.",
+  titleHighlight: "Zonder banklening of balansdruk.",
+  subtitle: "Overbrug betalingstermijnen van 30 tot 90 dagen. Krijg binnen 24 tot 48 uur liquiditeit op basis van meer dan 60 beproefde Time Gap Cashflow (TGC) structuren.",
+  ctaPrimary: "Bereken je werkkapitaal",
+  ctaSecondary: "Vraag gratis gap-analyse aan"
 };
 
 export const INTRO_CONTENT = {
-  text: "Spontiva brengt TGC-methodes in die direct aansluiten op hoe geld door jouw bedrijf beweegt. Door deze methodes aan te bieden, kun je gebruikmaken van technieken die vaak sneller inzetbaar zijn dan traditionele trajecten, zodat je operationele verplichtingen minder gevoelig kunnen worden voor timingverschillen. Met de optie om eerst een TGC-analyse te laten uitvoeren, laten we zien waar precies in facturatie, inkoop en ontvangstmomenten tijdelijke ruimte kan ontstaan; dat inzicht geeft je concrete keuzes en de mogelijkheid om weloverwogen te handelen.",
+  tagline: "Waarom Spontiva TGC?",
+  caseBadge: "Praktijkcase: Facturatiegap",
+  caseValue: "+€ 35.000 Overbrugging",
+  text: "Wachten op debiteuren van 30, 60 of 90 dagen belemmert je groei en inkoopkracht. Spontiva overbrugt dit timingverschil direct. Geen traditionele bankschuld op je balans, geen persoonlijke borgtocht en 100% behoud van je eigen klantrelaties.",
   benefits: [
-    "Benut bestaande processen voor tijdelijke ruimte.",
-    "Geen langdurige structurele wijzigingen nodig.",
-    "Inzicht in timingverschillen tussen inkomsten en uitgaven."
+    "Directe liquiditeit binnen 24 tot 48 uur na validatie.",
+    "Geen schuldverzwaring op je balans of persoonlijke aansprakelijkheid.",
+    "Transparante vaste vergoeding vooraf — geen verborgen fees achteraf."
   ]
 };
 
 export const SERVICES_CONTENT: { analysis: ServiceItem; request: ServiceItem } = {
   analysis: {
-    title: "TGC-analyse",
-    description: "We nemen een kijkje in je processen, verzamelen relevante documenten en leggen de timing van inkomende en uitgaande geldstromen naast elkaar.",
-    benefit: "Hierdoor ontstaan concrete inzichten in waar tijdelijke ruimte kan zitten en welke methodes daarvoor bruikbaar zijn.",
-    outcome: "Het grote voordeel is dat je op basis van feitelijke processen opties krijgt gepresenteerd; dat maakt beslissen eenvoudiger en vermindert giswerk."
+    title: "TGC Gap-Analyse",
+    description: "Grondige scan van je facturatiecyclus, debiteurentermijnen en inkoopverplichtingen om vastzittend werkkapitaal bloot te leggen.",
+    benefit: "Binnen 24 uur een helder strategisch rapport met exacte interventiepunten en liquiditeitsruimte.",
+    outcome: "Helder stappenplan met de meest rendabele TGC-methodes voor jouw specifieke cashflowritme."
   },
   request: {
-    title: "TGC-aanvraag",
-    description: "Bij een TGC-aanvraag maak je gebruik van de methodes die Spontiva beschikbaar stelt en stemmen we samen af welke inzet en welke duur het beste passen.",
-    benefit: "Wanneer een methode geschikt lijkt, kan deze relatief snel worden ingezet.",
-    outcome: "Dat kan direct effect hebben op je operationele continuïteit en tijdelijke druk verlichten."
+    title: "Directe TGC-Overbrugging",
+    description: "Direct inzetten van kapitaal op basis van goedgekeurde facturen of lopende projectcontracten zonder trage bankprocedures.",
+    benefit: "Uitbetaling binnen 24 tot 48 uur tegen een vooraf vastgesteld, transparant tarief.",
+    outcome: "Onmiddellijke rust en handelingssnelheid: salarissen, inkoop en groei gaan onbelemmerd door."
   }
 };
 
 export const PROCESS_STEPS: StepItem[] = [
   {
     number: 1,
-    title: "TGC-analyse aanvragen",
-    description: "Je levert basisdocumenten aan en we krijgen zicht op facturatie, betaaltermijnen en inkoopcycli. Dat levert een concreet overzicht op van mogelijke interventiepunten."
+    title: "Documenten & Gap-Check",
+    description: "Deel je openstaande facturen of debiteurenoverzicht via ons beveiligde portaal. We scannen direct waar de timing knelt."
   },
   {
     number: 2,
-    title: "Optie kiezen of direct aanvraag",
-    description: "Op basis van de analyse kun je kiezen om methodes te laten toepassen, of je doet meteen een TGC-aanvraag als je al weet wat je nodig hebt. Je beslist zelf."
+    title: "Methode Selectie",
+    description: "We selecteren uit 60+ TGC-methodes de optimale structuur voor jouw sector, met 100% transparante kosten vooraf."
   },
   {
     number: 3,
-    title: "Afstemming en inzet",
-    description: "We leggen samen vast welke periode en inzet passend zijn. De methode wordt toegepast en stopt zodra de normale inkomsten binnenkomen."
+    title: "Liquiditeit Binnen 24–48u",
+    description: "Je ontvangt het werkkapitaal direct op je rekening. Zodra je opdrachtgever betaalt, wordt de faciliteit automatisch afgewikkeld."
   }
 ];
 
 export const SEGMENTS: SegmentItem[] = [
   {
-    title: "ZZP’ers & Kleine Ondernemers",
-    description: "Die op opdrachtbasis werken en te maken hebben met wisselende betaalmomenten.",
-    useCase: "We laten zien waar late betalingen knellen en welke methodes snel toepasbaar zijn, zodat je kunt beoordelen of een tijdelijke maatregel zinvol is."
+    title: "IT, Tech & Detachering",
+    description: "Consultancy & tech bureaus met wekelijkse/maandelijkse loonkosten en 45-60 dagen betalingstermijnen van corporates.",
+    useCase: "Salarissen en onderaannemers direct betalen zonder afhankelijk te zijn van trage corporate facturatiecycli."
   },
   {
-    title: "MKB met Seizoensinvloeden",
-    description: "Bedrijven die voorraden moeten inkopen voordat het verkoopseizoen start.",
-    useCase: "We analyseren inkooppatronen zodat je opties krijgt om activiteiten te financieren via procesgerelateerde routes; dit kan bijdragen aan betere beschikbaarheid."
+    title: "Groothandel & Import",
+    description: "Bedrijven die leveranciers upfront moeten betalen voordat goederen worden uitgeleverd en gefactureerd.",
+    useCase: "Inkooporders en containerladingen tijdig financieren zodat voorraden op peil blijven en omzet piekt."
   },
   {
-    title: "Projectmatige Organisaties",
-    description: "Bureaus waar kosten vooruitlopen op de facturatie van projectfases.",
-    useCase: "Door projectfacturen en betalingsmomenten te vergelijken tonen we mogelijkheden om continuïteit te waarborgen zonder langdurige verplichtingen."
+    title: "Projectbureaus & Bouw",
+    description: "Aannemers en creatieve studio's waar projectfases en voorinvesteringen vooruitlopen op de eindafrekening.",
+    useCase: "Materiaalkosten en uren voorschieten zonder rood te hoeven staan bij de traditionele bank."
   },
   {
-    title: "Handelsbedrijven",
-    description: "Ondernemingen met significante tijdsgaten tussen inkoop en verkoop.",
-    useCase: "Tijdelijke inzet van methodes kan de bevoorrading mogelijk maken, waardoor de winkel tijdig vol staat en omzet gerealiseerd kan worden."
+    title: "E-Commerce & Scale-ups",
+    description: "Merken met seizoenspieken, hoge advertentie-uitgaven en snelle voorraadomloopsnelheden.",
+    useCase: "Marketingbudgetten en seizoensvoorraden direct opschalen op basis van voorspelbare omzet."
   }
 ];
 
 export const FAQ_ITEMS: FAQItem[] = [
   {
-    question: "Wat doet een TGC-analyse?",
-    answer: "We brengen processen en timing van geldstromen in kaart en tonen concrete plekken waar tijdelijke ruimte mogelijk is. Dat inzicht helpt je beslissen of je methodes wilt inzetten."
+    question: "Wat is het verschil tussen Spontiva TGC en een traditionele banklening?",
+    answer: "Een banklening creëert een langdurige schuld op je balans, vereist vaak persoonlijke borgtocht en duurt weken. Spontiva TGC is een procesgerichte kortlopende overbrugging van bestaand werkkapitaal: geen schuld op de balans, binnen 24-48 uur beschikbaar en direct afgerond zodra je debiteur betaalt."
   },
   {
-    question: "Ben ik verplicht iets te doen na de analyse?",
-    answer: "Nee. De analyse geeft opties; je kiest zelf of je methodes inzet en welke. Die vrijheid zorgt ervoor dat je alleen kiest wat voor jouw bedrijf relevant kan zijn."
+    question: "Neemt Spontiva contact op met mijn klanten of opdrachtgevers?",
+    answer: "Nee, in veruit de meeste TGC-methodes behoud je 100% de regie over het klantcontact. Jouw relatie met je opdrachtgever blijft discreet, professioneel en onaangetast."
   },
   {
-    question: "Hoe snel werkt een TGC-aanvraag?",
-    answer: "Afhankelijk van de gekozen methode en documentatie kan inzet snel plaatsvinden; in veel gevallen zie je binnen korte tijd praktische effecten."
+    question: "Hoe snel kan het werkkapitaal op mijn rekening staan?",
+    answer: "Na het uploaden van je factuur of contract en een snelle verificatie staat het benodigde bedrag doorgaans binnen 24 tot maximaal 48 uur op je zakelijke bankrekening."
   },
   {
-    question: "Wat gebeurt er met mijn data?",
-    answer: "We behandelen gegevens vertrouwelijk en werken volgens geldende privacyregels zodat je met vertrouwen informatie kunt delen die nodig is voor analyse of aanvraag."
+    question: "Zit ik vast aan langlopende contracten of verplichtingen?",
+    answer: "Absoluut niet. TGC is flexibel per factuur of per periode inzetbaar. Je bepaalt zelf wanneer en hoe vaak je een overbrugging activeert."
+  },
+  {
+    question: "Hoe worden mijn bedrijfsgegevens beveiligd?",
+    answer: "Al je gegevens en uploads worden end-to-end versleuteld verwerkt in onze ISO-gecertificeerde Europese cloudinfrastructuur conform de strengste AVG/GDPR normen."
   }
 ];
 
 export const COST_INFO = {
-  title: "Heldere kostenstructuur",
-  description: "Voor elke analyse en aanvraag geven we vooraf een overzicht van de inzet en de kosten. Je ziet exact wat een maatregel voor de afgesproken periode kost en welk effect dit op netto kaspositie kan hebben. Dat overzicht helpt je een zakelijke keuze te maken.",
-  disclaimer: "Disclaimer: Onderstaande simulatie is indicatief. Definitieve kosten hangen af van de gekozen methode en specifieke situatie."
+  title: "Transparante vergoeding vooraf. Geen verrassingen achteraf.",
+  description: "Bij Spontiva weet je exact waar je aan toe bent. Je betaalt een vast percentage over het overbrugde bedrag voor de afgesproken looptijd. Geen afsluitprovisies, geen verborgen administratiekosten en geen boetes bij eerdere aflossing.",
+  disclaimer: "Onderstaande rekentool toont een directe realtime indicatie. Definitieve tarieven worden vastgelegd na gap-verificatie."
 };
 
 export const CONTACT_LABELS = {
   name: "Bedrijfsnaam",
-  email: "E-mailadres",
+  email: "Zakelijk e-mailadres",
   type: "Waar heb je interesse in?",
-  message: "Extra toelichting (optioneel)",
-  file: "Documenten uploaden (optioneel)",
-  submit: "Verstuur aanvraag",
-  successTitle: "Aanvraag ontvangen",
-  successMessage: "Dank, we hebben je verzoek ontvangen. We nemen contact op om de vervolgstappen te bespreken en samen af te stemmen welke route voor jouw situatie het meest passend kan zijn."
+  message: "Gewenst overbruggingsbedrag of toelichting (optioneel)",
+  file: "Factuur of debiteurenlijst uploaden (optioneel)",
+  submit: "Verstuur aanvraag voor directe analyse",
+  successTitle: "Aanvraag succesvol ontvangen",
+  successMessage: "Binnen 24 uur nemen we contact op met je persoonlijke Time Gap Cashflow rapport en beschikbare methodes."
 };
 
-export const FOOTER_TEXT = "Spontiva werkt praktisch en procesgericht: wij laten zien waar tijdelijke ruimte kan zitten en welke methodes inzetbaar zijn. Het gebruik van TGC-methodes kan operationele ruimte bieden; of het in jullie specifieke situatie ook daadwerkelijk gunstig is, hangt af van processen en afspraken.";
+export const FOOTER_TEXT = "Spontiva is de toonaangevende specialist in Time Gap Cashflow (TGC) overbruggingen voor het Nederlandse ondernemersnetwerk. Geen traditionele bankschulden, maar intelligente procesliquiditeit.";
 
-// Icons map for easier usage in components
 export const ICONS = {
   Analysis: FileSearch,
   Request: LayoutDashboard,
   Process: TrendingUp,
   Time: Clock,
   Trust: ShieldCheck,
-  Chart: PieChart
+  Chart: PieChart,
+  Sparkles: Sparkles
 };

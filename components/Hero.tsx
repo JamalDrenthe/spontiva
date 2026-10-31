@@ -66,38 +66,42 @@ const Hero: React.FC<HeroProps> = ({ onSectionClick, onOpenAuth }) => {
             <ScrollReveal direction="down">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-50/90 border border-teal-200/80 text-teal-800 text-xs font-bold uppercase tracking-wide mb-6 shadow-sm backdrop-blur-sm">
                 <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-                <span>MEER DAN 60+ METHODES • WERKCAPITAAL OPTIMALISATIE</span>
+                <span>{HERO_CONTENT.badge}</span>
               </div>
             </ScrollReveal>
             
             <ScrollReveal direction="up" delay={100}>
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.08] mb-6">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-slate-700 to-teal-900">
-                  {HERO_CONTENT.title}
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight leading-[1.08] mb-6">
+                <span className="block text-slate-900">
+                  {HERO_CONTENT.titlePrimary}
+                </span>
+                <span className="block bg-clip-text text-transparent bg-gradient-to-r from-teal-600 via-emerald-600 to-teal-800">
+                  {HERO_CONTENT.titleHighlight}
                 </span>
               </h1>
             </ScrollReveal>
             
             <ScrollReveal direction="up" delay={200}>
               <p className="text-base sm:text-xl text-slate-600 mb-8 leading-relaxed font-normal max-w-2xl">
-                Spontiva overbrugt het tijdsverschil tussen jouw debiteuren en crediteuren. Krijg binnen 24 uur inzicht in vastzittend kapitaal en benut procesgerichte oplossingen zonder structurele leningen.
+                {HERO_CONTENT.subtitle}
               </p>
             </ScrollReveal>
             
             <ScrollReveal direction="up" delay={300}>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-6">
                 <button 
-                  onClick={() => onSectionClick('contact')}
-                  className="group inline-flex items-center justify-center px-8 py-4 border border-transparent text-sm sm:text-base font-bold rounded-2xl text-white bg-slate-900 hover:bg-slate-800 shadow-xl shadow-slate-900/25 hover:shadow-2xl hover:shadow-slate-900/35 transition-all duration-300 hover:-translate-y-1 active:translate-y-0"
+                  onClick={() => onSectionClick('kosten')}
+                  className="group inline-flex items-center justify-center px-8 py-4 border border-transparent text-sm sm:text-base font-bold rounded-2xl text-white bg-teal-600 hover:bg-teal-700 shadow-xl shadow-teal-600/25 hover:shadow-2xl hover:shadow-teal-600/35 transition-all duration-300 hover:-translate-y-1 active:translate-y-0"
                 >
-                  <ICONS.Analysis className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+                  <TrendingUp className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
                   <span>{HERO_CONTENT.ctaPrimary}</span>
+                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </button>
                 <button 
                   onClick={() => onSectionClick('contact')}
-                  className="group inline-flex items-center justify-center px-8 py-4 border border-slate-200 text-sm sm:text-base font-bold rounded-2xl text-slate-700 bg-white/90 hover:bg-white shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-300 hover:-translate-y-1 active:translate-y-0 backdrop-blur-sm"
+                  className="group inline-flex items-center justify-center px-8 py-4 border border-slate-200 text-sm sm:text-base font-bold rounded-2xl text-slate-800 bg-white hover:bg-slate-50 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 active:translate-y-0"
                 >
-                  <ICONS.Request className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform text-teal-600" />
+                  <ICONS.Analysis className="w-5 h-5 mr-2 text-teal-600 group-hover:scale-110 transition-transform" />
                   <span>{HERO_CONTENT.ctaSecondary}</span>
                 </button>
               </div>
@@ -106,7 +110,7 @@ const Hero: React.FC<HeroProps> = ({ onSectionClick, onOpenAuth }) => {
             {/* Account Portal Callout */}
             {onOpenAuth && (
               <ScrollReveal direction="up" delay={350}>
-                <div className="mb-8 p-3 rounded-2xl bg-white/90 border border-slate-200/80 shadow-sm inline-flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs backdrop-blur-sm">
+                <div className="mb-8 p-3 rounded-2xl bg-white/95 border border-slate-200/80 shadow-sm inline-flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs backdrop-blur-sm">
                   <span className="text-slate-600 flex items-center gap-1 font-medium">
                     <Sparkles size={14} className="text-teal-600" />
                     Al klant of direct testen?
@@ -132,9 +136,9 @@ const Hero: React.FC<HeroProps> = ({ onSectionClick, onOpenAuth }) => {
             {/* Microcopy with 3D feel */}
             <ScrollReveal direction="up" delay={400}>
               <div className="flex flex-wrap justify-center lg:justify-start gap-x-6 gap-y-3 text-xs sm:text-sm font-medium text-slate-500">
-                <span className="flex items-center"><ICONS.Trust className="w-4 h-4 mr-2 text-teal-500" /> Geen traditionele leningen</span>
-                <span className="flex items-center"><ICONS.Trust className="w-4 h-4 mr-2 text-teal-500" /> Procesgerichte analyse</span>
-                <span className="flex items-center"><ICONS.Trust className="w-4 h-4 mr-2 text-teal-500" /> Binnen 24-48 uur inzetbaar</span>
+                <span className="flex items-center"><ICONS.Trust className="w-4 h-4 mr-2 text-teal-500" /> Binnen 24–48u op rekening</span>
+                <span className="flex items-center"><ICONS.Trust className="w-4 h-4 mr-2 text-teal-500" /> Geen balansschuld</span>
+                <span className="flex items-center"><ICONS.Trust className="w-4 h-4 mr-2 text-teal-500" /> Behoud eigen klantcontact</span>
               </div>
             </ScrollReveal>
           </div>
@@ -155,9 +159,9 @@ const Hero: React.FC<HeroProps> = ({ onSectionClick, onOpenAuth }) => {
                   </span>
                 </div>
 
-                <h2 className="text-2xl font-black text-slate-900 mb-3">Waarom Spontiva?</h2>
+                <h2 className="text-2xl font-black text-slate-900 mb-3">{INTRO_CONTENT.tagline}</h2>
                 <p className="text-slate-600 leading-relaxed mb-6 text-xs sm:text-sm">
-                  {INTRO_CONTENT.text.substring(0, 160)}...
+                  {INTRO_CONTENT.text}
                 </p>
                 
                 <div className="space-y-3 pt-2 border-t border-slate-100">

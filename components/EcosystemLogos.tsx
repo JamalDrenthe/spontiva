@@ -187,16 +187,27 @@ const EcosystemLogos: React.FC = () => {
           </div>
         </div>
 
-        {/* Responsive Grid of the 11 Companies */}
+        {/* Responsive Layout: Smooth Swipe on Mobile, Full Grid on Desktop */}
         <ScrollReveal direction="up" delay={150}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {/* Mobile Swipe Hint */}
+          <div className="flex sm:hidden items-center justify-between text-xs text-slate-400 mb-3 px-1">
+            <span className="font-semibold text-teal-400 flex items-center gap-1">
+              <Network size={13} />
+              11 Zusterbedrijven
+            </span>
+            <span className="text-[11px] text-slate-500">
+              Veeg horizontaal →
+            </span>
+          </div>
+
+          <div className="flex overflow-x-auto snap-x snap-mandatory sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 pb-2 sm:pb-0">
             {SISTER_COMPANIES.map((comp) => {
               const isSelected = activeCompany?.id === comp.id;
               return (
                 <div
                   key={comp.id}
                   onClick={() => setActiveCompany(isSelected ? null : comp)}
-                  className={`group relative rounded-2xl p-5 border cursor-pointer transition-all duration-300 ${
+                  className={`w-[84vw] max-w-[320px] shrink-0 snap-center sm:w-auto sm:max-w-none group relative rounded-2xl p-5 border cursor-pointer transition-all duration-300 ${
                     isSelected
                       ? 'bg-gradient-to-b from-teal-950/50 to-slate-900/90 border-teal-500 shadow-xl shadow-teal-500/10 -translate-y-1'
                       : 'bg-slate-900/60 border-slate-800/90 hover:bg-slate-900 hover:border-slate-700 hover:-translate-y-1'
@@ -237,7 +248,7 @@ const EcosystemLogos: React.FC = () => {
             })}
 
             {/* Final Highlight Card: Spontiva's Position */}
-            <div className="sm:col-span-2 lg:col-span-1 rounded-2xl p-5 border border-teal-500/40 bg-gradient-to-br from-teal-950/60 via-slate-900/90 to-emerald-950/40 flex flex-col justify-between">
+            <div className="w-[84vw] max-w-[320px] shrink-0 snap-center sm:w-auto sm:max-w-none sm:col-span-2 lg:col-span-1 rounded-2xl p-5 border border-teal-500/40 bg-gradient-to-br from-teal-950/60 via-slate-900/90 to-emerald-950/40 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <img src="/spontiva-full-logo-dark.svg" alt="Spontiva - TIME GAP CASHFLOW" className="h-8 w-auto" />
