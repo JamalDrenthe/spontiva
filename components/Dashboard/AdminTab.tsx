@@ -17,7 +17,9 @@ import {
   Check,
   X,
   MessageSquare,
-  AlertTriangle
+  AlertTriangle,
+  Database,
+  CloudUpload
 } from 'lucide-react';
 import { ADMIN_EMAIL } from '../../firebaseConfig';
 import { DEMO_ACCOUNTS } from '../../demoData';
@@ -25,7 +27,7 @@ import { DEMO_ACCOUNTS } from '../../demoData';
 import { TGC_METHODS_CATALOG } from '../../tgcMethodsData';
 
 const AdminTab: React.FC = () => {
-  const { applications, updateApplicationStatus, currentUser, loginWithDemo } = useAuth();
+  const { applications, updateApplicationStatus, currentUser, loginWithDemo, seedFirestoreWithDemoData, syncStatus } = useAuth();
   
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
@@ -35,6 +37,7 @@ const AdminTab: React.FC = () => {
   const [assignedMethod, setAssignedMethod] = useState<string>('TGC-M01');
   const [newStatus, setNewStatus] = useState<ApplicationStatus>('goedgekeurd');
   const [actionSuccess, setActionSuccess] = useState<string | null>(null);
+  const [isSeeding, setIsSeeding] = useState(false);
 
   // Platform Metrics
   const totalVolume = applications.reduce((acc, curr) => acc + curr.amount, 0);
@@ -94,11 +97,24 @@ const AdminTab: React.FC = () => {
     setTimeout(() => setActionSuccess(null), 4000);
   };
 
+  const handleSeedDatabase = async () => {
+    setIsSeeding(true);
+    try {
+      await seedFirestoreWithDemoData();
+      setActionSuccess('Cloud Firestore is succesvol gesynchroniseerd met alle gebruikers-, dossier- en factuurdata!');
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsSeeding(false);
+      setTimeout(() => setActionSuccess(null), 5000);
+    }
+  };
+
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
       
       {/* Admin Hero Banner */}
-      <div className="bg-gradient-to-r from-purple-950 via-slate-900 to-indigo-950 rounded-2xl p-6 text-white border border-purple-800/50 shadow-xl space-y-3">
+      <div className="bg-gradient-to-r from-purple-950 via-slate-900 to-indigo-950 rounded-2xl p-6 text-white border border-purple-800/50 shadow-xl space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center space-x-2 text-purple-300 text-xs font-bold uppercase tracking-wider mb-1">
@@ -114,12 +130,24 @@ const AdminTab: React.FC = () => {
             </p>
           </div>
 
-          <div className="bg-purple-900/40 border border-purple-700/50 p-3 rounded-xl text-right flex-shrink-0">
-            <span className="text-[11px] text-purple-300 uppercase font-semibold block">Systeemstatus</span>
-            <span className="text-xs font-bold text-emerald-400 flex items-center justify-end gap-1.5 mt-0.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              Live & Synchroon
-            </span>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={handleSeedDatabase}
+              disabled={isSeeding}
+              className="px-4 py-2.5 bg-purple-700/60 hover:bg-purple-600 border border-purple-500/40 rounded-xl text-xs font-bold flex items-center gap-2 transition-all shadow-md active:scale-95 disabled:opacity-50"
+              title="Synchroniseer alle accounts en dossiers naar Cloud Firestore"
+            >
+              <CloudUpload size={15} className={isSeeding ? 'animate-bounce' : ''} />
+              <span>{isSeeding ? 'Synchroniseren...' : 'Sync Data naar Firebase'}</span>
+            </button>
+
+            <div className="bg-purple-900/40 border border-purple-700/50 p-2.5 rounded-xl text-right flex-shrink-0">
+              <span className="text-[10px] text-purple-300 uppercase font-semibold block">Firestore Status</span>
+              <span className="text-xs font-bold text-emerald-400 flex items-center justify-end gap-1.5 mt-0.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>{syncStatus === 'synced' ? 'Realtime Verbonden' : syncStatus}</span>
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -248,7 +276,14 @@ const AdminTab: React.FC = () => {
                 <tr key={app.id} className="hover:bg-slate-50/80 transition-colors">
                   <td className="p-4 font-bold text-slate-900">{app.id}</td>
                   <td className="p-4">
-                    <p className="font-bold text-slate-900">{app.companyName}</p>
+                    <div className="flex items-center gap-1.5">
+                      <p className="font-bold text-slate-900">{app.companyName}</p>
+                      {app.accountType && (
+                        <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 border border-slate-200">
+                          {app.accountType}
+                        </span>
+                      )}
+                    </div>
                     <p className="text-[11px] text-slate-500">{app.userEmail}</p>
                   </td>
                   <td className="p-4">

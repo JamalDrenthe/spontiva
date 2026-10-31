@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useAuth } from '../AuthContext';
 import { DEMO_ACCOUNTS } from '../demoData';
-import { X, ShieldCheck, UserCheck, Sparkles, AlertCircle, ArrowRight, CheckCircle2, Lock } from 'lucide-react';
+import { AccountType } from '../types';
+import { X, ShieldCheck, UserCheck, Sparkles, AlertCircle, ArrowRight, CheckCircle2, Lock, Briefcase, Building, Store, Users } from 'lucide-react';
 import { ADMIN_EMAIL } from '../firebaseConfig';
 
 interface AuthModalProps {
@@ -24,6 +25,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [company, setCompany] = useState('');
+  const [accountType, setAccountType] = useState<AccountType>('mkb');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -64,7 +66,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
           setLoading(false);
           return;
         }
-        await registerWithEmail(email, password, name, company);
+        await registerWithEmail(email, password, name, company, accountType);
       }
       if (onLoginSuccess) onLoginSuccess();
       onClose();
@@ -269,6 +271,71 @@ const AuthModal: React.FC<AuthModalProps> = ({
                         placeholder="Bijv. Spontiva B.V."
                         className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 transition-all"
                       />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">Type Account & Bedrijfsvorm</label>
+                      <div className="grid grid-cols-2 gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setAccountType('zzp')}
+                          className={`p-2 rounded-xl border text-left transition-all ${
+                            accountType === 'zzp'
+                              ? 'border-teal-500 bg-teal-50 text-teal-900 shadow-xs'
+                              : 'border-slate-200 hover:border-slate-300 text-slate-600'
+                          }`}
+                        >
+                          <div className="flex items-center gap-1.5 text-xs font-bold">
+                            <Briefcase size={13} className="text-teal-600" />
+                            <span>ZZP / Freelance</span>
+                          </div>
+                          <span className="text-[10px] text-slate-400 block mt-0.5">Dienstverleners & adviseurs</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setAccountType('mkb')}
+                          className={`p-2 rounded-xl border text-left transition-all ${
+                            accountType === 'mkb'
+                              ? 'border-teal-500 bg-teal-50 text-teal-900 shadow-xs'
+                              : 'border-slate-200 hover:border-slate-300 text-slate-600'
+                          }`}
+                        >
+                          <div className="flex items-center gap-1.5 text-xs font-bold">
+                            <Building size={13} className="text-teal-600" />
+                            <span>MKB Bedrijf</span>
+                          </div>
+                          <span className="text-[10px] text-slate-400 block mt-0.5">Logistiek, bouw & productie</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setAccountType('corporate')}
+                          className={`p-2 rounded-xl border text-left transition-all ${
+                            accountType === 'corporate'
+                              ? 'border-teal-500 bg-teal-50 text-teal-900 shadow-xs'
+                              : 'border-slate-200 hover:border-slate-300 text-slate-600'
+                          }`}
+                        >
+                          <div className="flex items-center gap-1.5 text-xs font-bold">
+                            <Store size={13} className="text-teal-600" />
+                            <span>Grootzakelijk / Retail</span>
+                          </div>
+                          <span className="text-[10px] text-slate-400 block mt-0.5">Groothandel & ketens</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setAccountType('partner')}
+                          className={`p-2 rounded-xl border text-left transition-all ${
+                            accountType === 'partner'
+                              ? 'border-teal-500 bg-teal-50 text-teal-900 shadow-xs'
+                              : 'border-slate-200 hover:border-slate-300 text-slate-600'
+                          }`}
+                        >
+                          <div className="flex items-center gap-1.5 text-xs font-bold">
+                            <Users size={13} className="text-teal-600" />
+                            <span>Intermediair</span>
+                          </div>
+                          <span className="text-[10px] text-slate-400 block mt-0.5">Accountant & financier</span>
+                        </button>
+                      </div>
                     </div>
                   </>
                 )}

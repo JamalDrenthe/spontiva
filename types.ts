@@ -37,11 +37,15 @@ export type PageView = 'home' | 'privacy' | 'terms' | 'dashboard' | 'about' | 'c
 
 export type UserRole = 'admin' | 'user' | 'demo';
 
+export type AccountType = 'zzp' | 'mkb' | 'corporate' | 'partner' | 'admin';
+
 export interface UserProfile {
   uid: string;
   email: string;
   displayName: string;
   companyName: string;
+  accountType?: AccountType;
+  accountTypeLabel?: string;
   kvkNumber?: string;
   iban?: string;
   phone?: string;
@@ -49,6 +53,7 @@ export interface UserProfile {
   isDemo?: boolean;
   photoURL?: string;
   createdAt: string;
+  updatedAt?: string;
 }
 
 export type ApplicationStatus = 
@@ -67,6 +72,7 @@ export interface TGCApplication {
   userId: string;
   userEmail: string;
   companyName: string;
+  accountType?: AccountType;
   type: ApplicationType;
   amount: number;
   timeGapDays: number;
@@ -175,6 +181,7 @@ export interface DemoAccount {
   name: string;
   email: string;
   roleLabel: string;
+  accountType?: AccountType;
   companyName: string;
   kvkNumber: string;
   iban: string;

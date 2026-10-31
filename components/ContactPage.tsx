@@ -16,6 +16,7 @@ import {
 import Card3D from './Card3D';
 import ScrollReveal from './ScrollReveal';
 import { PageView } from '../types';
+import { useAuth } from '../AuthContext';
 
 interface ContactPageProps {
   onNavigate: (page: PageView) => void;
@@ -23,6 +24,8 @@ interface ContactPageProps {
 }
 
 const ContactPage: React.FC<ContactPageProps> = ({ onNavigate, onOpenAuth }) => {
+  const { submitContactRequest } = useAuth();
+
   const [formType, setFormType] = useState<'analyse' | 'aanvraag' | 'vraag'>('analyse');
   const [companyName, setCompanyName] = useState('');
   const [contactName, setContactName] = useState('');
@@ -30,11 +33,31 @@ const ContactPage: React.FC<ContactPageProps> = ({ onNavigate, onOpenAuth }) => 
   const [phone, setPhone] = useState('');
   const [amount, setAmount] = useState('€ 10.000 - € 50.000');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    if (!email) return;
+
+    setLoading(true);
+    try {
+      await submitContactRequest({
+        name: contactName || companyName,
+        company: companyName,
+        email,
+        phone,
+        formType,
+        amount,
+        message
+      });
+      setIsSubmitted(true);
+    } catch (err) {
+      console.error(err);
+      setIsSubmitted(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -286,10 +309,11 @@ const ContactPage: React.FC<ContactPageProps> = ({ onNavigate, onOpenAuth }) => 
 
                     <button
                       type="submit"
-                      className="w-full py-3.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-lg shadow-slate-900/15 transition-all hover:-translate-y-0.5 active:translate-y-0"
+                      disabled={loading}
+                      className="w-full py-3.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-lg shadow-slate-900/15 transition-all hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-60"
                     >
                       <Send size={15} />
-                      <span>Verstuur Aanvraag naar info@spontiva.nl</span>
+                      <span>{loading ? 'Bezig met versturen...' : 'Verstuur Aanvraag naar info@spontiva.nl'}</span>
                     </button>
 
                     <p className="text-[11px] text-slate-400 text-center">

@@ -1,17 +1,38 @@
 import React, { useState, FormEvent } from 'react';
 import { CONTACT_LABELS } from '../constants';
 import { FormType } from '../types';
+import { useAuth } from '../AuthContext';
 
 const ContactForm: React.FC = () => {
+  const { submitContactRequest } = useAuth();
+
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formType, setFormType] = useState<FormType>(FormType.ANALYSIS);
+  const [company, setCompany] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // Simulate submission
-    setTimeout(() => {
-        setIsSubmitted(true);
-    }, 800);
+    if (!company || !email) return;
+
+    setLoading(true);
+    try {
+      await submitContactRequest({
+        name: company,
+        company,
+        email,
+        message: message || `Aanvraag voor ${formType === FormType.ANALYSIS ? 'TGC-Analyse' : 'TGC-Aanvraag'}`,
+        formType: formType === FormType.ANALYSIS ? 'analyse' : 'aanvraag'
+      });
+      setIsSubmitted(true);
+    } catch (err) {
+      console.error(err);
+      setIsSubmitted(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (isSubmitted) {
@@ -24,7 +45,12 @@ const ContactForm: React.FC = () => {
             <h3 className="text-3xl font-extrabold text-slate-900 mb-4">{CONTACT_LABELS.successTitle}</h3>
             <p className="text-slate-600 text-lg mb-8 leading-relaxed">{CONTACT_LABELS.successMessage}</p>
             <button 
-              onClick={() => setIsSubmitted(false)}
+              onClick={() => {
+                setIsSubmitted(false);
+                setCompany('');
+                setEmail('');
+                setMessage('');
+              }}
               className="text-teal-600 font-bold hover:text-teal-700 hover:underline underline-offset-4"
             >
               Terug naar formulier
@@ -86,6 +112,8 @@ const ContactForm: React.FC = () => {
                 type="text"
                 id="company"
                 required
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
                 className="w-full px-5 py-4 bg-slate-50 rounded-xl border border-transparent focus:bg-white focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 outline-none transition-all duration-200 font-medium text-slate-900 placeholder-slate-400"
                 placeholder="Uw bedrijfsnaam"
               />
@@ -99,6 +127,8 @@ const ContactForm: React.FC = () => {
                 type="email"
                 id="email"
                 required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-5 py-4 bg-slate-50 rounded-xl border border-transparent focus:bg-white focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 outline-none transition-all duration-200 font-medium text-slate-900 placeholder-slate-400"
                 placeholder="naam@bedrijf.nl"
               />
@@ -131,6 +161,8 @@ const ContactForm: React.FC = () => {
               <textarea
                 id="message"
                 rows={4}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 className="w-full px-5 py-4 bg-slate-50 rounded-xl border border-transparent focus:bg-white focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 outline-none transition-all duration-200 font-medium text-slate-900 placeholder-slate-400 resize-none"
                 placeholder="Vertel ons kort over uw situatie..."
               ></textarea>
@@ -139,13 +171,14 @@ const ContactForm: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full flex justify-center py-4 px-6 border border-transparent rounded-2xl shadow-lg shadow-slate-900/10 text-lg font-bold text-white bg-slate-900 hover:bg-slate-800 hover:shadow-xl hover:shadow-slate-900/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 transition-all duration-200 transform hover:-translate-y-0.5"
+            disabled={loading}
+            className="w-full flex justify-center py-4 px-6 border border-transparent rounded-2xl shadow-lg shadow-slate-900/10 text-lg font-bold text-white bg-slate-900 hover:bg-slate-800 hover:shadow-xl hover:shadow-slate-900/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 transition-all duration-200 transform hover:-translate-y-0.5 disabled:opacity-60"
           >
-            {CONTACT_LABELS.submit}
+            {loading ? 'Bezig met versturen...' : CONTACT_LABELS.submit}
           </button>
           
           <p className="text-xs text-center text-slate-400 mt-4">
-            Door te versturen gaat u akkoord met ons privacybeleid en worden uw gegevens versleuteld verwerkt.
+            Door te versturen gaat u akkoord met ons privacybeleid en worden uw gegevens veilig en versleuteld in Firebase verwerkt.
           </p>
         </form>
       </div>

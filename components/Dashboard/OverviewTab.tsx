@@ -77,8 +77,17 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ onNavigate, onDeployMethod })
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-            Welkom, {currentUser?.displayName}
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight flex items-center flex-wrap gap-2.5">
+            <span>Welkom, {currentUser?.displayName}</span>
+            {currentUser?.accountType && (
+              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-teal-500/20 text-teal-300 border border-teal-500/30">
+                {currentUser.accountType === 'zzp' && 'ZZP Specialist'}
+                {currentUser.accountType === 'mkb' && 'MKB Onderneming'}
+                {currentUser.accountType === 'corporate' && 'Grootzakelijk / Retail'}
+                {currentUser.accountType === 'partner' && 'Partner / Intermediair'}
+                {currentUser.accountType === 'admin' && 'Spontiva Directie'}
+              </span>
+            )}
           </h1>
 
           <p className="text-slate-300 text-xs sm:text-sm max-w-2xl leading-relaxed">

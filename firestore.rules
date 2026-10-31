@@ -1,10 +1,123 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    // ===============================================================
+    // Assumed Data Models
+    // ===============================================================
+    //
+    // Collection: users/{userId}
+    // Document ID: Matches user UID
+    // Fields:
+    //   - uid: string (required, 1-128 chars, immutable) - Firebase Auth UID
+    //   - email: string (required, valid email, 4-150 chars) - Contact email
+    //   - displayName: string (required, 1-100 chars) - User or contact person name
+    //   - companyName: string (optional, 1-120 chars) - Registered business entity
+    //   - role: string (required, 'admin' | 'user' | 'demo') - Access role
+    //   - accountType: string (optional, 'zzp' | 'mkb' | 'corporate' | 'partner' | 'admin')
+    //   - accountTypeLabel: string (optional, <= 100 chars)
+    //   - kvkNumber: string (optional, <= 20 chars) - Dutch Chamber of Commerce number
+    //   - iban: string (optional, <= 35 chars) - Bank account number
+    //   - phone: string (optional, <= 30 chars) - Phone contact
+    //   - isDemo: bool (optional) - Demo account indicator
+    //   - photoURL: string (optional, <= 500 chars) - Profile picture URL
+    //   - createdAt: string (optional, <= 50 chars) - Creation timestamp
+    //   - updatedAt: string (optional, <= 50 chars) - Update timestamp
+    //
+    // Collection: applications/{applicationId}
+    // Document ID: Generated string (e.g. TGC-YYYY-XXX)
+    // Fields:
+    //   - id: string (optional, <= 100 chars)
+    //   - userId: string (required, 1-128 chars, immutable for owners) - Owner UID
+    //   - userEmail: string (required, valid email, <= 150 chars)
+    //   - companyName: string (required, 1-120 chars)
+    //   - accountType: string (optional, enum)
+    //   - type: string (required, 'analyse' | 'aanvraag')
+    //   - amount: number (required, 0 <= amount <= 100,000,000) - Requested capital
+    //   - timeGapDays: number (required, 0 <= days <= 365) - Days of cashflow bridge
+    //   - status: string (required, enum) - TGC status workflow
+    //   - invoiceDescription: string (optional, <= 1000 chars)
+    //   - counterparty: string (optional, <= 150 chars) - Debtor or creditor name
+    //   - notes: string (optional, <= 2000 chars)
+    //   - adminFeedback: string (optional, <= 2000 chars, admin-only editable)
+    //   - approvedAmount: number (optional, 0 <= amount <= 100,000,000, admin-only editable)
+    //   - recommendedMethod: string (optional, <= 100 chars, admin-only editable)
+    //   - submittedAt: string (optional, <= 50 chars)
+    //   - updatedAt: string (optional, <= 50 chars)
+    //
+    // Collection: invoices/{invoiceId}
+    // Document ID: Generated invoice identifier (e.g. inv-timestamp)
+    // Fields:
+    //   - id: string (optional, <= 100 chars)
+    //   - userId: string (required, 1-128 chars, immutable for owners) - Owner UID
+    //   - invoiceNumber: string (required, 1-100 chars) - Invoice reference
+    //   - counterparty: string (required, 1-150 chars) - Debtor/creditor name
+    //   - type: string (required, 'debiteur' | 'crediteur')
+    //   - amount: number (required, 0 <= amount <= 100,000,000)
+    //   - issueDate: string (optional, <= 50 chars)
+    //   - dueDate: string (optional, <= 50 chars)
+    //   - timeGapDays: number (required, 0 <= days <= 365)
+    //   - status: string (required, 'openstaand' | 'overbrugd' | 'voldaan')
+    //   - linkedMethodId: string (optional, <= 100 chars) - TGC Method Code
+    //   - notes: string (optional, <= 2000 chars)
+    //
+    // Collection: documents/{documentId}
+    // Document ID: Generated document identifier (e.g. doc-timestamp)
+    // Fields:
+    //   - id: string (optional, <= 100 chars)
+    //   - userId: string (required, 1-128 chars, immutable) - Owner UID
+    //   - name: string (required, 1-200 chars) - File title
+    //   - type: string (required, 1-100 chars) - File MIME or category
+    //   - size: string (required, 1-50 chars) - Formatted file size
+    //   - status: string (required, 'geverifieerd' | 'in_beoordeling' | 'afgekeurd')
+    //   - uploadedAt: string (optional, <= 50 chars)
+    //   - url: string (optional, <= 500 chars) - Storage reference
+    //
+    // Collection: reports/{reportId}
+    // Document ID: Generated report identifier (e.g. rep-timestamp)
+    // Fields:
+    //   - id: string (optional, <= 100 chars)
+    //   - userId: string (required, 1-128 chars) - Client UID
+    //   - companyName: string (required, 1-150 chars)
+    //   - title: string (required, 1-200 chars)
+    //   - auditDate: string (optional, <= 50 chars)
+    //   - status: string (required, 'voltooid' | 'in_analyse')
+    //   - cashflowScore: number (required, 0 <= score <= 100)
+    //   - avgDebtorDays: number (optional, >= 0)
+    //   - avgCreditorDays: number (optional, >= 0)
+    //   - lockedCapital: number (optional, >= 0)
+    //   - unlockedPotential: number (optional, >= 0)
+    //   - bottlenecks: list (optional, max 20 items)
+    //   - conclusion: string (optional, <= 3000 chars)
+    //   - recommendedNextStep: string (optional, <= 1000 chars)
+    //
+    // Collection: contact_requests/{requestId}
+    // Document ID: Generated request identifier
+    // Fields:
+    //   - id: string (optional, <= 100 chars)
+    //   - email: string (required, valid email, 4-150 chars)
+    //   - name: string (optional, <= 150 chars)
+    //   - company: string (optional, <= 150 chars)
+    //   - formType: string (optional, <= 50 chars)
+    //   - type: string (optional, <= 50 chars)
+    //   - message: string (optional, <= 5000 chars)
+    //   - fileUrl: string (optional, <= 500 chars)
+    //   - submittedAt: string (optional, <= 50 chars)
+    //   - createdAt: string (optional, <= 50 chars)
+    //   - status: string (optional, <= 50 chars)
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Core Helper Functions
+    // ===============================================================
+
+    // Check if user is authenticated with Firebase Auth
     function signedIn() {
       return request.auth != null;
     }
 
+    // Verify admin role via verified email bootstrap or custom token claim
     function isAdmin() {
       return signedIn() && (
         request.auth.token.email == 'info@spontiva.nl' ||
@@ -13,8 +126,219 @@ service cloud.firestore {
       );
     }
 
+    // Check if the authenticated user is the target document owner
+    function isOwner(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    // Email format validation with safe length bounds
+    function isValidEmail(email) {
+      return email is string &&
+        email.size() >= 4 &&
+        email.size() <= 150 &&
+        email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    // Ensure specified critical fields are not modified during an update
+    function areImmutableFieldsUnchanged(fields) {
+      return !request.resource.data.diff(resource.data).affectedKeys().hasAny(fields);
+    }
+
+    // ===============================================================
+    // Domain Validator Functions
+    // ===============================================================
+
+    // Validator for users/{userId} documents
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'email', 'displayName', 'role']) &&
+        data.keys().hasOnly(['uid', 'email', 'displayName', 'companyName', 'role', 'accountType', 'accountTypeLabel', 'kvkNumber', 'iban', 'phone', 'isDemo', 'photoURL', 'createdAt', 'updatedAt']) &&
+        data.uid is string && data.uid.size() > 0 && data.uid.size() <= 128 &&
+        data.email is string && isValidEmail(data.email) &&
+        data.displayName is string && data.displayName.size() > 0 && data.displayName.size() <= 100 &&
+        data.role is string && data.role in ['admin', 'user', 'demo'] &&
+        (!('companyName' in data) || (data.companyName is string && data.companyName.size() <= 120)) &&
+        (!('accountType' in data) || (data.accountType is string && data.accountType in ['zzp', 'mkb', 'corporate', 'partner', 'admin'])) &&
+        (!('accountTypeLabel' in data) || (data.accountTypeLabel is string && data.accountTypeLabel.size() <= 100)) &&
+        (!('kvkNumber' in data) || (data.kvkNumber is string && data.kvkNumber.size() <= 20)) &&
+        (!('iban' in data) || (data.iban is string && data.iban.size() <= 35)) &&
+        (!('phone' in data) || (data.phone is string && data.phone.size() <= 30)) &&
+        (!('isDemo' in data) || data.isDemo is bool) &&
+        (!('photoURL' in data) || (data.photoURL is string && data.photoURL.size() <= 500)) &&
+        (!('createdAt' in data) || (data.createdAt is string && data.createdAt.size() <= 50)) &&
+        (!('updatedAt' in data) || (data.updatedAt is string && data.updatedAt.size() <= 50));
+    }
+
+    // Validator for applications/{applicationId} documents
+    function isValidApplication(data) {
+      return data.keys().hasAll(['userId', 'userEmail', 'companyName', 'type', 'amount', 'timeGapDays', 'status']) &&
+        data.keys().hasOnly(['id', 'userId', 'userEmail', 'companyName', 'accountType', 'type', 'amount', 'timeGapDays', 'status', 'invoiceDescription', 'counterparty', 'submittedAt', 'updatedAt', 'notes', 'adminFeedback', 'approvedAmount', 'recommendedMethod']) &&
+        data.userId is string && data.userId.size() > 0 && data.userId.size() <= 128 &&
+        data.userEmail is string && isValidEmail(data.userEmail) &&
+        data.companyName is string && data.companyName.size() > 0 && data.companyName.size() <= 120 &&
+        data.type is string && data.type in ['analyse', 'aanvraag'] &&
+        data.amount is number && data.amount >= 0 && data.amount <= 100000000 &&
+        data.timeGapDays is number && data.timeGapDays >= 0 && data.timeGapDays <= 365 &&
+        data.status is string && data.status in ['nieuw', 'in_behandeling', 'in_analyse', 'goedgekeurd', 'actief', 'afgerond', 'afgewezen'] &&
+        (!('id' in data) || (data.id is string && data.id.size() <= 100)) &&
+        (!('accountType' in data) || (data.accountType is string && data.accountType in ['zzp', 'mkb', 'corporate', 'partner', 'admin'])) &&
+        (!('invoiceDescription' in data) || (data.invoiceDescription is string && data.invoiceDescription.size() <= 1000)) &&
+        (!('counterparty' in data) || (data.counterparty is string && data.counterparty.size() <= 150)) &&
+        (!('notes' in data) || (data.notes is string && data.notes.size() <= 2000)) &&
+        (!('adminFeedback' in data) || (data.adminFeedback is string && data.adminFeedback.size() <= 2000)) &&
+        (!('approvedAmount' in data) || (data.approvedAmount is number && data.approvedAmount >= 0 && data.approvedAmount <= 100000000)) &&
+        (!('recommendedMethod' in data) || (data.recommendedMethod is string && data.recommendedMethod.size() <= 100)) &&
+        (!('submittedAt' in data) || (data.submittedAt is string && data.submittedAt.size() <= 50)) &&
+        (!('updatedAt' in data) || (data.updatedAt is string && data.updatedAt.size() <= 50));
+    }
+
+    // Validator for invoices/{invoiceId} documents
+    function isValidInvoice(data) {
+      return data.keys().hasAll(['userId', 'invoiceNumber', 'counterparty', 'type', 'amount', 'timeGapDays', 'status']) &&
+        data.keys().hasOnly(['id', 'userId', 'invoiceNumber', 'counterparty', 'type', 'amount', 'issueDate', 'dueDate', 'timeGapDays', 'status', 'linkedMethodId', 'notes']) &&
+        data.userId is string && data.userId.size() > 0 && data.userId.size() <= 128 &&
+        data.invoiceNumber is string && data.invoiceNumber.size() > 0 && data.invoiceNumber.size() <= 100 &&
+        data.counterparty is string && data.counterparty.size() > 0 && data.counterparty.size() <= 150 &&
+        data.type is string && data.type in ['debiteur', 'crediteur'] &&
+        data.amount is number && data.amount >= 0 && data.amount <= 100000000 &&
+        data.timeGapDays is number && data.timeGapDays >= 0 && data.timeGapDays <= 365 &&
+        data.status is string && data.status in ['openstaand', 'overbrugd', 'voldaan'] &&
+        (!('id' in data) || (data.id is string && data.id.size() <= 100)) &&
+        (!('issueDate' in data) || (data.issueDate is string && data.issueDate.size() <= 50)) &&
+        (!('dueDate' in data) || (data.dueDate is string && data.dueDate.size() <= 50)) &&
+        (!('linkedMethodId' in data) || (data.linkedMethodId is string && data.linkedMethodId.size() <= 100)) &&
+        (!('notes' in data) || (data.notes is string && data.notes.size() <= 2000));
+    }
+
+    // Validator for documents/{documentId} metadata documents
+    function isValidDocument(data) {
+      return data.keys().hasAll(['userId', 'name', 'type', 'size', 'status']) &&
+        data.keys().hasOnly(['id', 'userId', 'name', 'type', 'size', 'uploadedAt', 'status', 'url']) &&
+        data.userId is string && data.userId.size() > 0 && data.userId.size() <= 128 &&
+        data.name is string && data.name.size() > 0 && data.name.size() <= 200 &&
+        data.type is string && data.type.size() > 0 && data.type.size() <= 100 &&
+        data.size is string && data.size.size() > 0 && data.size.size() <= 50 &&
+        data.status is string && data.status in ['geverifieerd', 'in_beoordeling', 'afgekeurd'] &&
+        (!('id' in data) || (data.id is string && data.id.size() <= 100)) &&
+        (!('uploadedAt' in data) || (data.uploadedAt is string && data.uploadedAt.size() <= 50)) &&
+        (!('url' in data) || (data.url is string && data.url.size() <= 500));
+    }
+
+    // Validator for reports/{reportId} analysis documents
+    function isValidReport(data) {
+      return data.keys().hasAll(['userId', 'companyName', 'title', 'status', 'cashflowScore']) &&
+        data.keys().hasOnly(['id', 'userId', 'companyName', 'title', 'auditDate', 'status', 'cashflowScore', 'avgDebtorDays', 'avgCreditorDays', 'lockedCapital', 'unlockedPotential', 'bottlenecks', 'conclusion', 'recommendedNextStep']) &&
+        data.userId is string && data.userId.size() > 0 && data.userId.size() <= 128 &&
+        data.companyName is string && data.companyName.size() > 0 && data.companyName.size() <= 150 &&
+        data.title is string && data.title.size() > 0 && data.title.size() <= 200 &&
+        data.status is string && data.status in ['voltooid', 'in_analyse'] &&
+        data.cashflowScore is number && data.cashflowScore >= 0 && data.cashflowScore <= 100 &&
+        (!('id' in data) || (data.id is string && data.id.size() <= 100)) &&
+        (!('auditDate' in data) || (data.auditDate is string && data.auditDate.size() <= 50)) &&
+        (!('avgDebtorDays' in data) || (data.avgDebtorDays is number && data.avgDebtorDays >= 0)) &&
+        (!('avgCreditorDays' in data) || (data.avgCreditorDays is number && data.avgCreditorDays >= 0)) &&
+        (!('lockedCapital' in data) || (data.lockedCapital is number && data.lockedCapital >= 0)) &&
+        (!('unlockedPotential' in data) || (data.unlockedPotential is number && data.unlockedPotential >= 0)) &&
+        (!('bottlenecks' in data) || (data.bottlenecks is list && data.bottlenecks.size() <= 20)) &&
+        (!('conclusion' in data) || (data.conclusion is string && data.conclusion.size() <= 3000)) &&
+        (!('recommendedNextStep' in data) || (data.recommendedNextStep is string && data.recommendedNextStep.size() <= 1000));
+    }
+
+    // Validator for contact_requests/{requestId} public inquiries
+    function isValidContactRequest(data) {
+      return data.keys().hasAll(['email']) &&
+        data.keys().hasOnly(['id', 'email', 'name', 'company', 'formType', 'type', 'message', 'fileUrl', 'submittedAt', 'createdAt', 'status']) &&
+        data.email is string && data.email.size() > 3 && data.email.size() <= 150 && isValidEmail(data.email) &&
+        (!('id' in data) || (data.id is string && data.id.size() <= 100)) &&
+        (!('name' in data) || (data.name is string && data.name.size() <= 150)) &&
+        (!('company' in data) || (data.company is string && data.company.size() <= 150)) &&
+        (!('formType' in data) || (data.formType is string && data.formType.size() <= 50)) &&
+        (!('type' in data) || (data.type is string && data.type.size() <= 50)) &&
+        (!('message' in data) || (data.message is string && data.message.size() <= 5000)) &&
+        (!('fileUrl' in data) || (data.fileUrl is string && data.fileUrl.size() <= 500)) &&
+        (!('submittedAt' in data) || (data.submittedAt is string && data.submittedAt.size() <= 50)) &&
+        (!('createdAt' in data) || (data.createdAt is string && data.createdAt.size() <= 50)) &&
+        (!('status' in data) || (data.status is string && data.status.size() <= 50));
+    }
+
+    // ===============================================================
+    // Collection Match Rules
+    // ===============================================================
+
+    // 1. users/{userId}: Personal user profiles (PII protection)
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if (isAdmin() || (
+          isOwner(userId) &&
+          request.resource.data.uid == userId &&
+          request.resource.data.role != 'admin'
+        )) && isValidUser(request.resource.data);
+      allow update: if (isAdmin() || (
+          isOwner(userId) &&
+          areImmutableFieldsUnchanged(['uid', 'role'])
+        )) && isValidUser(request.resource.data);
+      allow delete: if isAdmin() || isOwner(userId);
+    }
+
+    // 2. applications/{applicationId}: TGC credit & analysis applications
+    match /applications/{applicationId} {
+      allow read: if isAdmin() || (signedIn() && resource.data.userId == request.auth.uid);
+      allow create: if (isAdmin() || (
+          signedIn() &&
+          request.resource.data.userId == request.auth.uid
+        )) && isValidApplication(request.resource.data);
+      allow update: if (isAdmin() || (
+          signedIn() &&
+          resource.data.userId == request.auth.uid &&
+          areImmutableFieldsUnchanged(['userId', 'status', 'adminFeedback', 'approvedAmount', 'recommendedMethod'])
+        )) && isValidApplication(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // 3. invoices/{invoiceId}: Client debtor/creditor invoices
+    match /invoices/{invoiceId} {
+      allow read: if isAdmin() || (signedIn() && resource.data.userId == request.auth.uid);
+      allow create: if (isAdmin() || (
+          signedIn() &&
+          request.resource.data.userId == request.auth.uid
+        )) && isValidInvoice(request.resource.data);
+      allow update: if (isAdmin() || (
+          signedIn() &&
+          resource.data.userId == request.auth.uid &&
+          areImmutableFieldsUnchanged(['userId'])
+        )) && isValidInvoice(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // 4. documents/{documentId}: Uploaded financial document metadata
+    match /documents/{documentId} {
+      allow read: if isAdmin() || (signedIn() && resource.data.userId == request.auth.uid);
+      allow create: if (isAdmin() || (
+          signedIn() &&
+          request.resource.data.userId == request.auth.uid
+        )) && isValidDocument(request.resource.data);
+      allow update: if isAdmin() && isValidDocument(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // 5. reports/{reportId}: Financial audit and cashflow analyses
+    match /reports/{reportId} {
+      allow read: if isAdmin() || (signedIn() && resource.data.userId == request.auth.uid);
+      allow create: if isAdmin() && isValidReport(request.resource.data);
+      allow update: if isAdmin() && isValidReport(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // 6. contact_requests/{requestId}: Public lead and contact requests
+    match /contact_requests/{requestId} {
+      allow create: if request.resource.data.email is string &&
+        request.resource.data.email.size() > 3 &&
+        isValidContactRequest(request.resource.data);
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Default Deny Root Fallback
     match /{document=**} {
-      allow read, write: if isAdmin();
+      allow read, write: if false;
     }
   }
 }
