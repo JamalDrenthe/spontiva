@@ -64,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({
             <img 
               src="/spontiva-full-logo.svg" 
               alt="Spontiva - TIME GAP CASHFLOW" 
-              className="h-10 sm:h-11 w-auto transition-transform group-hover:scale-105"
+              className="h-8 sm:h-10 w-auto transition-transform group-hover:scale-105"
             />
           </div>
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import EcosystemLogos from './components/EcosystemLogos';
@@ -20,14 +20,48 @@ import ScrollProgress from './components/ScrollProgress';
 import { PageView } from './types';
 import { AuthProvider, useAuth } from './AuthContext';
 
+const getPageFromUrl = (): PageView => {
+  const params = new URLSearchParams(window.location.search);
+  const pageParam = params.get('page');
+  const validPages: PageView[] = ['home', 'privacy', 'terms', 'dashboard', 'about', 'contact'];
+  if (pageParam && validPages.includes(pageParam as PageView)) {
+    return pageParam as PageView;
+  }
+  const hash = window.location.hash.replace('#/', '').replace('#', '');
+  if (hash && validPages.includes(hash as PageView)) {
+    return hash as PageView;
+  }
+  return 'home';
+};
+
 const AppContent: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState<PageView>('home');
+  const [currentPage, setCurrentPage] = useState<PageView>(getPageFromUrl);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState<'login' | 'register' | 'demo'>('login');
   const { currentUser } = useAuth();
 
+  useEffect(() => {
+    const handleUrlChange = () => {
+      setCurrentPage(getPageFromUrl());
+      const params = new URLSearchParams(window.location.search);
+      const auth = params.get('auth');
+      if (auth === 'login' || auth === 'register' || auth === 'demo') {
+        setAuthModalMode(auth);
+        setAuthModalOpen(true);
+      }
+    };
+    handleUrlChange();
+    window.addEventListener('hashchange', handleUrlChange);
+    window.addEventListener('popstate', handleUrlChange);
+    return () => {
+      window.removeEventListener('hashchange', handleUrlChange);
+      window.removeEventListener('popstate', handleUrlChange);
+    };
+  }, []);
+
   const navigateToPage = (page: PageView) => {
     setCurrentPage(page);
+    window.location.hash = page === 'home' ? '' : `#/${page}`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
